@@ -8,30 +8,30 @@ namespace othello
 {
     internal class Player
     {
-        protected string __name;
-        protected int __tokenCount;
-        protected int __id;
+        protected string _name;
+        protected int _tokenCount;
+        protected int _id;
 
         public string Name
         {
-            get => __name;
+            get => _name;
         }
 
         public int TokenCount
         {
-            get => __tokenCount;
+            get => _tokenCount;
         }
 
         public int ID
         {
-            get => __id;
+            get => _id;
         }
 
         public Player(string name, int tokenCount, int id)
         {
-            this.__name = name;
-            this.__tokenCount = tokenCount;
-            this.__id = id;
+            this._name = name;
+            this._tokenCount = tokenCount;
+            this._id = id;
         }
     }
 }

@@ -10,6 +10,7 @@ namespace othello
         GameboardImageArray _gameBoardGui;
         int[,] gameBoardData;
         string tileImageDirPath = Directory.GetCurrentDirectory() + @"\assets\";
+        GameEngine gameEngine = new GameEngine();
 
         public Form1()
         {
@@ -30,6 +31,19 @@ namespace othello
             {
                 DialogResult result = MessageBox.Show(ex.ToString(), "Game board has size problem", MessageBoxButtons.OK);
                 this.Close();
+            }
+
+            gameEngine.BoardArray = gameBoardData;
+            gameEngine.P1 = new Player("Player 1", 0, 0);
+            gameEngine.P2 = new Player("Player 2", 0, 0);
+            gameEngine.CurrentPlayer = gameEngine.P1;
+            gameEngine.GameOver = false;
+
+            IllegalMove i1 = new IllegalMove(gameEngine.BoardArray, gameEngine.CurrentPlayer, 6, 6);
+            int[,] arr = i1.adjacencyCheck(8, 8);
+            for(int i = 0; i < arr.Length; i++)
+            {
+                //MessageBox.Show($"{arr[i, 0]} | {arr[i, 1]} | {gameBoardData[arr[i, 0], arr[i, 1]]}");
             }
         }
 
@@ -60,11 +74,6 @@ namespace othello
             int selectionCol = _gameBoardGui.GetCurrentColumnIndex(sender);
 
             MessageBox.Show($"You just clicked the square at row {selectionRow + 1} and col {selectionCol + 1}");
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
