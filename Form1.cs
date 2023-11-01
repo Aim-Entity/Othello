@@ -39,12 +39,10 @@ namespace othello
             gameEngine.CurrentPlayer = gameEngine.P1;
             gameEngine.GameOver = false;
 
-            IllegalMove i1 = new IllegalMove(gameEngine.BoardArray, gameEngine.CurrentPlayer, 6, 6);
-            int[,] arr = i1.adjacencyCheck(8, 8);
-            for(int i = 0; i < arr.Length; i++)
-            {
-                //MessageBox.Show($"{arr[i, 0]} | {arr[i, 1]} | {gameBoardData[arr[i, 0], arr[i, 1]]}");
-            }
+            
+            IllegalMove i1 = new IllegalMove(gameEngine.BoardArray, gameEngine.CurrentPlayer, 8, 5); // (y, x)
+            bool exist = i1.HorizontalCheck();
+            MessageBox.Show(Convert.ToString(exist));
         }
 
         private int[,] MakeBoardArray()
@@ -64,6 +62,7 @@ namespace othello
             boardArray[4, 3] = 0;
             boardArray[3, 4] = 0;
             boardArray[4, 4] = 1;
+            boardArray[4, 5] = 1;
 
             return boardArray;
         }
