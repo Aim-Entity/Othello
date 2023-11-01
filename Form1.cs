@@ -40,9 +40,10 @@ namespace othello
             gameEngine.GameOver = false;
 
             
-            IllegalMove i1 = new IllegalMove(gameEngine.BoardArray, gameEngine.CurrentPlayer, 8, 5); // (y, x)
+            IllegalMove i1 = new IllegalMove(gameEngine.BoardArray, gameEngine.CurrentPlayer, 5, 6); // (y, x)
             bool exist = i1.HorizontalCheck();
-            MessageBox.Show(Convert.ToString(exist));
+            bool exist2 = i1.VerticalCheck();
+            MessageBox.Show($"{exist} | {exist2}");
         }
 
         private int[,] MakeBoardArray()
