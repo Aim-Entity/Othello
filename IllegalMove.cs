@@ -120,7 +120,19 @@ namespace othello
             int yIndex = Y - 1;
 
             //List<int[]> oppositeAdjacentPieces = new List<int[]>();
-            int[,] oppositeAdjacentPieces = new int[9, 2]; // 9 Rows with 2 columns. col 1 = y | col 2 = x
+            //int[,] oppositeAdjacentPieces = new int[9, 2]; // 9 Rows with 2 columns. col 1 = y | col 2 = x
+            int[,] oppositeAdjacentPieces = 
+                {
+                    {-1, -1},
+                    {-1, -1},
+                    {-1, -1},
+                    {-1, -1},
+                    {-1, -1},
+                    {-1, -1},
+                    {-1, -1},
+                    {-1, -1},
+                    {-1, -1}
+                };
             int arrIndex = 0;
 
             int currentPieceId = this.CurrentPlayer.ID;
@@ -201,10 +213,11 @@ namespace othello
 
         public bool HorizontalCheck()
         {
+            Illegal = true;
             // Gets all enemy pieces that is touching the new piece and places it in a 9 by 2 array
             int[,] oppositeAdjacentPieces = adjacencyCheck(8, 8);
-            // If the first index of the array is 0 (range is 1-8) then there is no pieces touching the new piece.
-            if (oppositeAdjacentPieces[0, 0] == 0)
+            // If the first index of the array is -1 (range is 0-7) then there is no pieces touching the new piece.
+            if (oppositeAdjacentPieces[0, 0] == -1)
             {
                 Illegal = true;
             }
@@ -288,10 +301,11 @@ namespace othello
 
         public bool VerticalCheck()
         {
+            Illegal = true;
             // Gets all enemy pieces that is touching the new piece and places it in a 9 by 2 array
             int[,] oppositeAdjacentPieces = adjacencyCheck(8, 8);
-            // If the first index of the array is 0 (range is 1-8) then there is no pieces touching the new piece.
-            if (oppositeAdjacentPieces[0, 0] == 0)
+            // If the first index of the array is -1 (range is 0-7) then there is no pieces touching the new piece.
+            if (oppositeAdjacentPieces[0, 0] == -1)
             {
                 Illegal = true;
             }
@@ -356,7 +370,7 @@ namespace othello
                     {
                         currentYCoordOnBottom++;
                         // Checks if the left is an edge or empty token
-                        MessageBox.Show($"{BoardArr[bottomCoordIndexes[0], bottomCoordIndexes[1]]} | {currentYCoordOnBottom},{bottomCoordIndexes[0]}");
+                        //MessageBox.Show($"{BoardArr[bottomCoordIndexes[0], bottomCoordIndexes[1]]} | {currentYCoordOnBottom},{bottomCoordIndexes[0]}");
                         if ((currentYCoordOnBottom == 8 || BoardArr[currentYCoordOnBottom, bottomCoordIndexes[1]] == 10) && Illegal)
                         {
                             Illegal = true;
@@ -369,6 +383,95 @@ namespace othello
                         }
 
                     }
+                }
+            }
+            return Illegal; // If false is returned, move is not illegal.
+        }
+
+        public bool DiagCheck()
+        {
+            Illegal = true;
+            // Gets all enemy pieces that is touching the new piece and places it in a 9 by 2 array
+            int[,] oppositeAdjacentPieces = adjacencyCheck(8, 8);
+            // If the first index of the array is -1 (range is 0-7) then there is no pieces touching the new piece.
+            if (oppositeAdjacentPieces[0, 0] == -1)
+            {
+                Illegal = true;
+            }
+            else
+            {
+                int xIndex = X - 1; // Example xIndex = 3
+                int yIndex = Y - 1; // example yIndex = 5 [5, 3]
+                int currentPieceId = this.CurrentPlayer.ID;
+                int oppositePieceId = getOppositeId(currentPieceId);
+
+                //int[] topRight = { yIndex - 1, xIndex + 1 }; // (y, x) coord
+                //int[] topLeft = { yIndex - 1, xIndex - 1 }; // (y, x) coord
+                //int[] bottomRight = { yIndex + 1, xIndex + 1 }; // (y, x) coord
+                //int[] bottomLeft = { yIndex + 1, xIndex - 1 }; // (y, x) coord
+                int[,] corners =
+                    {
+                    { yIndex - 1, xIndex + 1 }, // Top Right
+                    { yIndex - 1, xIndex - 1 }, // Top Left
+                    { yIndex + 1, xIndex + 1 }, // Bottom Right
+                    { yIndex + 1, xIndex - 1 }  // Bottom Left
+                    };
+
+                // Only stores adjacent diag pieces of opposite colour
+                int[,] adjacentDiagPieces = { {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1} };
+                int loopCounter = 0;
+
+                for(int i = 0; i < 4; i++)
+                {
+                    if(BoardArr[corners[i, 0], corners[i, 1]] == oppositePieceId)
+                    {
+                        adjacentDiagPieces[loopCounter, 0] = corners[i, 0];
+                        adjacentDiagPieces[loopCounter, 1] = corners[i, 1];
+
+                        loopCounter++;
+                    }
+                }
+                //MessageBox.Show($"{adjacentDiagPieces[0, 0]} | {adjacentDiagPieces[0, 1]} | {adjacentDiagPieces[1, 0]} | {adjacentDiagPieces[1, 1]}");
+                
+                /*
+                 
+                1. Loop through each adjacent diagonal piece.
+                2. If the current iteration doesn't have a coordinate of (-1, -1), then there is a diagonal piece
+                3. Displacement is the 
+                
+                */
+                for(int i = 0; i < 4; i++)
+                {
+                    if(adjacentDiagPieces[i, 0] != -1)
+                    {
+                        int displacementY = adjacentDiagPieces[0, 0] - yIndex;
+                        int displacementX = adjacentDiagPieces[0, 1] - xIndex;
+                        int currentIteration = 1;
+
+                        while (true)
+                        {
+                            currentIteration++;
+                            // if displacement == 1 => 1, 2, 3, 4, 5... | if displacement == -1 => -1, -2, -3, -4...
+                            int ChangeOfDisplacementY = displacementY * currentIteration;
+                            int ChangeOfDisplacementX = displacementX * currentIteration;
+
+                            int newYCoord = yIndex + ChangeOfDisplacementY;
+                            int newXCoord = xIndex + ChangeOfDisplacementX;
+
+                            //MessageBox.Show($"{newYCoord}, {newXCoord} | {BoardArr[newYCoord, newXCoord]}");
+                            if(newYCoord == -1 || newYCoord == 8 || newXCoord == -1 || newXCoord == 8)
+                            {
+                                break;
+                            } else if(BoardArr[newYCoord, newXCoord] == 10)
+                            {
+                                break;
+                            } else if(BoardArr[newYCoord, newXCoord] == currentPieceId)
+                            {
+                                Illegal = false;
+                                break;
+                            }
+                        }
+                    } 
                 }
             }
             return Illegal; // If false is returned, move is not illegal.
