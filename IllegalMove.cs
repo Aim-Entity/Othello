@@ -476,5 +476,22 @@ namespace othello
             }
             return Illegal; // If false is returned, move is not illegal.
         }
+
+        public bool checkAllSides()
+        {
+            bool vert = VerticalCheck();
+            bool hor = HorizontalCheck();
+            bool diag = DiagCheck();
+
+            if (!vert || !hor || !diag)
+            {
+                Illegal = false;
+            } else
+            {
+                Illegal = true;
+            }
+
+            return Illegal;
+        }
     }
 }
