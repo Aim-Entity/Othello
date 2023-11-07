@@ -41,5 +41,15 @@ namespace othello
         {
             get => _y;
         }
+
+        protected int getOppositeId(int currentPieceId)
+        {
+            int oppositePieceId;
+
+            if (currentPieceId == 0) oppositePieceId = 1;
+            else oppositePieceId = 0;
+
+            return oppositePieceId;
+        }
     }
 }

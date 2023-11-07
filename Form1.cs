@@ -40,16 +40,19 @@ namespace othello
             gameEngine.GameOver = false;
 
             
-            IllegalMove i1 = new IllegalMove(gameEngine.BoardArray, gameEngine.CurrentPlayer, 6, 6); // (x, y)
-            bool exist = i1.HorizontalCheck();
-            bool exist2 = i1.VerticalCheck();
-            bool exist3 = i1.DiagCheck();
-            bool exist4 = i1.checkAllSides();
+            //IllegalMove i1 = new IllegalMove(gameEngine.BoardArray, gameEngine.CurrentPlayer, 3, 4); // (x, y)
+            //bool exist = i1.HorizontalCheck();
+            //bool exist2 = i1.VerticalCheck();
+            //bool exist3 = i1.DiagCheck();
+            //bool exist4 = i1.checkAllSides();
             //MessageBox.Show($"{exist} | {exist2} | {exist3} | {exist4}");
 
             ValidMove v1 = new ValidMove(gameEngine.BoardArray, gameEngine.CurrentPlayer, -1, -1);
             bool valid = v1.checkForAnyValidMoves(NUM_OF_BOARD_ROWS, NUM_OF_BOARD_COL);
             MessageBox.Show($"{valid}");
+
+            SimulateMove s1 = new SimulateMove(gameEngine.BoardArray, gameEngine.CurrentPlayer, 2, 4);
+            s1.updateBoard();
         }
 
         private int[,] MakeBoardArray()
@@ -66,15 +69,13 @@ namespace othello
             }
 
             boardArray[3, 3] = 1;
-            boardArray[3, 4] = 0;
+            boardArray[3, 4] = 1;
             boardArray[4, 4] = 1;
             boardArray[4, 3] = 0;
-            //boardArray[4, 5] = 1;
-            //boardArray[3, 5] = 0;
-            //boardArray[3, 6] = 0;
-            //boardArray[2, 2] = 0;
-            //boardArray[2, 5] = 1;
-
+            boardArray[3, 5] = 1;
+            boardArray[3, 6] = 1;
+            boardArray[3, 7] = 0;
+            boardArray[3, 2] = 1;
             return boardArray;
         }
 

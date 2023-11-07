@@ -18,16 +18,6 @@ namespace othello
             Illegal = true;
         }
 
-        private int getOppositeId(int currentPieceId)
-        {
-            int oppositePieceId;
-
-            if (currentPieceId == 0) oppositePieceId = 1;
-            else oppositePieceId = 0;
-
-            return oppositePieceId;
-        }
-
         // The next two methods are vile. Clean later. !IMPORTANT
         private int[] validateIfOnEdge(int rowCount, int colCount)
         {
@@ -423,12 +413,15 @@ namespace othello
 
                 for(int i = 0; i < 4; i++)
                 {
-                    if(BoardArr[corners[i, 0], corners[i, 1]] == oppositePieceId)
+                    if(corners[i, 0] < 8 && corners[i, 1] < 8)
                     {
-                        adjacentDiagPieces[loopCounter, 0] = corners[i, 0];
-                        adjacentDiagPieces[loopCounter, 1] = corners[i, 1];
+                        if (BoardArr[corners[i, 0], corners[i, 1]] == oppositePieceId)
+                        {
+                            adjacentDiagPieces[loopCounter, 0] = corners[i, 0];
+                            adjacentDiagPieces[loopCounter, 1] = corners[i, 1];
 
-                        loopCounter++;
+                            loopCounter++;
+                        }
                     }
                 }
                 //MessageBox.Show($"{adjacentDiagPieces[0, 0]} | {adjacentDiagPieces[0, 1]} | {adjacentDiagPieces[1, 0]} | {adjacentDiagPieces[1, 1]}");
