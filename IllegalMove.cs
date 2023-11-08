@@ -249,6 +249,7 @@ namespace othello
                 {
                     while (true)
                     {
+                        Illegal = true;
                         currentXCoordOnLeft--;
                         // Checks if the left is an edge or empty token
                         if ((currentXCoordOnLeft == -1 || BoardArr[leftCoordIndexes[0], currentXCoordOnLeft] == 10) && Illegal)
@@ -270,7 +271,10 @@ namespace othello
                 {
                     while (true)
                     {
+                        Illegal = true;
                         currentXCoordOnRight++;
+                        //MessageBox.Show($"{rightCoordIndexes[0]},{currentXCoordOnRight} | {(currentXCoordOnRight == 8 || BoardArr[rightCoordIndexes[0], currentXCoordOnRight] == 10)}");
+                        //MessageBox.Show($"{BoardArr[rightCoordIndexes[0], currentXCoordOnRight]}");
                         // Checks if the left is an edge or empty token
                         if ((currentXCoordOnRight == 8 || BoardArr[rightCoordIndexes[0], currentXCoordOnRight] == 10) && Illegal)
                         {
@@ -337,6 +341,7 @@ namespace othello
                 {
                     while (true)
                     {
+                        Illegal = true;
                         currentYCoordOnTop--;
                         // Checks if the left is an edge or empty token
                         if ((currentYCoordOnTop == -1 || BoardArr[currentYCoordOnTop, topCoordIndexes[1]] == 10) && Illegal)
@@ -358,6 +363,7 @@ namespace othello
                 {
                     while (true)
                     {
+                        Illegal = true;
                         currentYCoordOnBottom++;
                         // Checks if the left is an edge or empty token
                         //MessageBox.Show($"{BoardArr[bottomCoordIndexes[0], bottomCoordIndexes[1]]} | {currentYCoordOnBottom},{bottomCoordIndexes[0]}");
@@ -411,9 +417,9 @@ namespace othello
                 int[,] adjacentDiagPieces = { {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1} };
                 int loopCounter = 0;
 
-                for(int i = 0; i < 4; i++)
+                for (int i = 0; i < 4; i++)
                 {
-                    if(corners[i, 0] < 8 && corners[i, 1] < 8)
+                    if ((corners[i, 0] < 8 && corners[i, 1] < 8) && (corners[i, 0] > -1 && corners[i, 1] > -1))
                     {
                         if (BoardArr[corners[i, 0], corners[i, 1]] == oppositePieceId)
                         {
@@ -443,6 +449,7 @@ namespace othello
 
                         while (true)
                         {
+                            Illegal = true;
                             currentIteration++;
                             // if displacement == 1 => 1, 2, 3, 4, 5... | if displacement == -1 => -1, -2, -3, -4...
                             int ChangeOfDisplacementY = displacementY * currentIteration;

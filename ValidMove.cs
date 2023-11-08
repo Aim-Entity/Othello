@@ -15,7 +15,7 @@ namespace othello
         }
         public ValidMove(int[,] boardArr, Player currentPlayer, int x, int y) : base(boardArr, currentPlayer, y, x)
         {
-            Valid = false;
+            Valid = false; //Invalid by default
         }
 
         public bool checkForAnyValidMoves(int BoardRow, int BoardCol)
@@ -30,7 +30,7 @@ namespace othello
                     bool isLegal = illegalCheck.checkAllSides();
                     if(isLegal == false)
                     {
-                        Valid = true;
+                        Valid = true; // If there is one valid move, then player can play move
                     }
                 }
             }

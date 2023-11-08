@@ -22,6 +22,7 @@ namespace othello
         public int[,] BoardArr
         {
             get => _boardArr;
+            set => _boardArr = value;
         }
 
         protected Player _currentPlayer;

@@ -38,21 +38,6 @@ namespace othello
             gameEngine.P2 = new Player("Player 2", 0, 1);
             gameEngine.CurrentPlayer = gameEngine.P1;
             gameEngine.GameOver = false;
-
-            
-            //IllegalMove i1 = new IllegalMove(gameEngine.BoardArray, gameEngine.CurrentPlayer, 3, 4); // (x, y)
-            //bool exist = i1.HorizontalCheck();
-            //bool exist2 = i1.VerticalCheck();
-            //bool exist3 = i1.DiagCheck();
-            //bool exist4 = i1.checkAllSides();
-            //MessageBox.Show($"{exist} | {exist2} | {exist3} | {exist4}");
-
-            ValidMove v1 = new ValidMove(gameEngine.BoardArray, gameEngine.CurrentPlayer, -1, -1);
-            bool valid = v1.checkForAnyValidMoves(NUM_OF_BOARD_ROWS, NUM_OF_BOARD_COL);
-            MessageBox.Show($"{valid}");
-
-            SimulateMove s1 = new SimulateMove(gameEngine.BoardArray, gameEngine.CurrentPlayer, 2, 4);
-            s1.updateBoard();
         }
 
         private int[,] MakeBoardArray()
@@ -69,14 +54,22 @@ namespace othello
             }
 
             boardArray[3, 3] = 1;
-            boardArray[3, 4] = 1;
+            boardArray[3, 4] = 0;
             boardArray[4, 4] = 1;
             boardArray[4, 3] = 0;
-            boardArray[3, 5] = 1;
-            boardArray[3, 6] = 1;
-            boardArray[3, 7] = 0;
-            boardArray[3, 2] = 1;
+            
             return boardArray;
+        }
+
+        private Player getOppositePlayer(Player player)
+        {
+            if(player == gameEngine.P1)
+            {
+                return gameEngine.P2;
+            } else
+            {
+                return gameEngine.P1;
+            }
         }
 
         private void GameTileClicked(object sender, EventArgs e)
@@ -84,7 +77,37 @@ namespace othello
             int selectionRow = _gameBoardGui.GetCurrentRowIndex(sender);
             int selectionCol = _gameBoardGui.GetCurrentColumnIndex(sender);
 
-            MessageBox.Show($"You just clicked the square at row {selectionRow + 1} and col {selectionCol + 1}");
+            Player oppositePlayer = getOppositePlayer(gameEngine.CurrentPlayer);
+
+            IllegalMove illegalMove = new IllegalMove(gameEngine.BoardArray, gameEngine.CurrentPlayer, selectionCol + 1, selectionRow + 1);
+            ValidMove validMoveForCurrentPlayer = new ValidMove(gameEngine.BoardArray, gameEngine.CurrentPlayer, -1, -1); // Valid move does not need x and y
+            ValidMove validMoveForOppositePlayer = new ValidMove(gameEngine.BoardArray, oppositePlayer, -1, -1);
+
+            if (illegalMove.checkAllSides() == false)
+            {
+                if(validMoveForCurrentPlayer.checkForAnyValidMoves(NUM_OF_BOARD_ROWS, NUM_OF_BOARD_COL))
+                {
+                    SimulateMove s1 = new SimulateMove(gameEngine.BoardArray, gameEngine.CurrentPlayer, selectionCol + 1, selectionRow + 1);
+                    s1.updateBoard();
+                    gameBoardData = s1.BoardArr;
+                    gameBoardData[selectionRow, selectionCol] = gameEngine.CurrentPlayer.ID;
+
+                    _gameBoardGui.UpdateBoardGui(gameBoardData);
+
+                    gameEngine.UpdateCurrentPlayer();
+                } else if(!validMoveForCurrentPlayer.checkForAnyValidMoves(NUM_OF_BOARD_ROWS, NUM_OF_BOARD_COL) && !validMoveForOppositePlayer.checkForAnyValidMoves(NUM_OF_BOARD_ROWS, NUM_OF_BOARD_COL))
+                {
+                    MessageBox.Show("Neither player has a legal move. Game end");
+                }
+                else
+                {
+                    MessageBox.Show($"{gameEngine.CurrentPlayer} does not have a legal move");
+                    _gameBoardGui.UpdateBoardGui(gameBoardData);
+                } 
+            } else
+            {
+                MessageBox.Show($"You just clicked the square at row {selectionRow + 1} and col {selectionCol + 1}");
+            }
         }
     }
 }
