@@ -43,6 +43,8 @@ namespace othello
 
             */
 
+            // CLEEEEEEEEEEEAN
+
             // Checks for bottom right edge
             if (xIndex + 1 == colCount && yIndex + 1 == rowCount)
             {
@@ -133,6 +135,8 @@ namespace othello
             int prevRow = validateIfOnEdge(rowCount, colCount)[2];
             int prevCol = validateIfOnEdge(rowCount, colCount)[3];
 
+            // CLEEEEEEEEEEEAN
+
             // Checks the right
             if (BoardArr[yIndex, xIndex + nextCol] == oppositePieceId)
             {
@@ -201,6 +205,7 @@ namespace othello
             return oppositeAdjacentPieces;
         }
 
+        // CLEEEEEEEEEEEAN
         public bool HorizontalCheck()
         {
             Illegal = true;
@@ -293,6 +298,7 @@ namespace othello
             return Illegal; // If false is returned, move is not illegal.
         }
 
+        // CLEEEEEEEEEEEAN
         public bool VerticalCheck()
         {
             Illegal = true;
@@ -384,6 +390,7 @@ namespace othello
             return Illegal; // If false is returned, move is not illegal.
         }
 
+        // CLEEEEEEEEEEEAN
         public bool DiagCheck()
         {
             Illegal = true;

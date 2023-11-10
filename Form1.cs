@@ -57,7 +57,8 @@ namespace othello
             boardArray[3, 4] = 0;
             boardArray[4, 4] = 1;
             boardArray[4, 3] = 0;
-            
+
+
             return boardArray;
         }
 
@@ -88,9 +89,15 @@ namespace othello
                 if(validMoveForCurrentPlayer.checkForAnyValidMoves(NUM_OF_BOARD_ROWS, NUM_OF_BOARD_COL))
                 {
                     SimulateMove s1 = new SimulateMove(gameEngine.BoardArray, gameEngine.CurrentPlayer, selectionCol + 1, selectionRow + 1);
-                    s1.updateBoard();
-                    gameBoardData = s1.BoardArr;
+                    s1.updateBoard(selectionCol, selectionRow);
                     gameBoardData[selectionRow, selectionCol] = gameEngine.CurrentPlayer.ID;
+                    gameBoardData = s1.BoardArr;
+
+                    s1.updateAllFlankPieces(NUM_OF_BOARD_ROWS, NUM_OF_BOARD_COL);
+                    gameBoardData = s1.BoardArr;
+
+                    s1.updateBoard(selectionCol, selectionRow);
+                    gameBoardData = s1.BoardArr;
 
                     _gameBoardGui.UpdateBoardGui(gameBoardData);
 
