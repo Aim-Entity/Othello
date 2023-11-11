@@ -1,8 +1,10 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace othello
 {
@@ -18,7 +20,6 @@ namespace othello
             Illegal = true;
         }
 
-        // The next two methods are vile. Clean later. !IMPORTANT
         private int[] validateIfOnEdge(int rowCount, int colCount)
         {
             int xIndex = X - 1;
@@ -101,6 +102,43 @@ namespace othello
             return displacementFromEdge;
         }
 
+        private Tuple<int[,], int> updateAdjacentPieces(int yIndex, int xIndex, int rowDisplacement, int colDisplacement, int[,] oppositeAdjacentPieces, int arrIndex)
+        {
+            int currentPieceId = this.CurrentPlayer.ID;
+            int oppositePieceId = getOppositeId(currentPieceId);
+
+            if(rowDisplacement == 0)
+            {
+                if (BoardArr[yIndex, xIndex + colDisplacement] == oppositePieceId)
+                {
+                    //MessageBox.Show("T1");
+                    oppositeAdjacentPieces[arrIndex, 0] = yIndex;
+                    oppositeAdjacentPieces[arrIndex, 1] = xIndex + colDisplacement;
+                    arrIndex++;
+                }
+            } else if(colDisplacement == 0)
+            {
+                if (BoardArr[yIndex + rowDisplacement, xIndex] == oppositePieceId)
+                {
+                    //MessageBox.Show("T3");
+                    oppositeAdjacentPieces[arrIndex, 0] = yIndex + rowDisplacement;
+                    oppositeAdjacentPieces[arrIndex, 1] = xIndex;
+                    arrIndex++;
+                }
+            } else
+            {
+                if (BoardArr[yIndex + rowDisplacement, xIndex + colDisplacement] == oppositePieceId)
+                {
+                    //MessageBox.Show("T8");
+                    oppositeAdjacentPieces[arrIndex, 0] = yIndex + rowDisplacement;
+                    oppositeAdjacentPieces[arrIndex, 1] = xIndex + colDisplacement;
+                    arrIndex++;
+                }
+            }
+
+            return Tuple.Create(oppositeAdjacentPieces, arrIndex);
+        }
+
         /// <summary>
         /// Checks what piece the created piece is touching.
         /// If it is touching an opposing piece, it returns the coordinate of the opposing pieces.
@@ -138,6 +176,30 @@ namespace othello
             // CLEEEEEEEEEEEAN
 
             // Checks the right
+            oppositeAdjacentPieces = updateAdjacentPieces(yIndex, xIndex, 0, nextCol, oppositeAdjacentPieces, arrIndex).Item1;
+            arrIndex = updateAdjacentPieces(yIndex, xIndex, 0, nextCol, oppositeAdjacentPieces, arrIndex).Item2;
+
+            oppositeAdjacentPieces = updateAdjacentPieces(yIndex, xIndex, 0, prevCol, oppositeAdjacentPieces, arrIndex).Item1;
+            arrIndex = updateAdjacentPieces(yIndex, xIndex, 0, prevCol, oppositeAdjacentPieces, arrIndex).Item2;
+
+            oppositeAdjacentPieces = updateAdjacentPieces(yIndex, xIndex, prevRow, 0, oppositeAdjacentPieces, arrIndex).Item1;
+            arrIndex = updateAdjacentPieces(yIndex, xIndex, prevRow, 0, oppositeAdjacentPieces, arrIndex).Item2;
+
+            oppositeAdjacentPieces = updateAdjacentPieces(yIndex, xIndex, nextRow, 0, oppositeAdjacentPieces, arrIndex).Item1;
+            arrIndex = updateAdjacentPieces(yIndex, xIndex, nextRow, 0, oppositeAdjacentPieces, arrIndex).Item2;
+
+            oppositeAdjacentPieces = updateAdjacentPieces(yIndex, xIndex, prevRow, nextCol, oppositeAdjacentPieces, arrIndex).Item1;
+            arrIndex = updateAdjacentPieces(yIndex, xIndex, prevRow, nextCol, oppositeAdjacentPieces, arrIndex).Item2;
+
+            oppositeAdjacentPieces = updateAdjacentPieces(yIndex, xIndex, prevRow, prevCol, oppositeAdjacentPieces, arrIndex).Item1;
+            arrIndex = updateAdjacentPieces(yIndex, xIndex, prevRow, prevCol, oppositeAdjacentPieces, arrIndex).Item2;
+
+            oppositeAdjacentPieces = updateAdjacentPieces(yIndex, xIndex, nextRow, prevCol, oppositeAdjacentPieces, arrIndex).Item1;
+            arrIndex = updateAdjacentPieces(yIndex, xIndex, nextRow, prevCol, oppositeAdjacentPieces, arrIndex).Item2;
+
+            oppositeAdjacentPieces = updateAdjacentPieces(yIndex, xIndex, nextRow, nextCol, oppositeAdjacentPieces, arrIndex).Item1;
+            arrIndex = updateAdjacentPieces(yIndex, xIndex, nextRow, nextCol, oppositeAdjacentPieces, arrIndex).Item2;
+            /*
             if (BoardArr[yIndex, xIndex + nextCol] == oppositePieceId)
             {
                 //MessageBox.Show("T1");
@@ -201,6 +263,7 @@ namespace othello
                 oppositeAdjacentPieces[arrIndex, 1] = xIndex + nextCol;
                 arrIndex++;
             }
+            */
 
             return oppositeAdjacentPieces;
         }
