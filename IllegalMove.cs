@@ -173,8 +173,6 @@ namespace othello
             int prevRow = validateIfOnEdge(rowCount, colCount)[2];
             int prevCol = validateIfOnEdge(rowCount, colCount)[3];
 
-            // CLEEEEEEEEEEEAN
-
             // Checks the right
             oppositeAdjacentPieces = updateAdjacentPieces(yIndex, xIndex, 0, nextCol, oppositeAdjacentPieces, arrIndex).Item1;
             arrIndex = updateAdjacentPieces(yIndex, xIndex, 0, nextCol, oppositeAdjacentPieces, arrIndex).Item2;
@@ -199,76 +197,10 @@ namespace othello
 
             oppositeAdjacentPieces = updateAdjacentPieces(yIndex, xIndex, nextRow, nextCol, oppositeAdjacentPieces, arrIndex).Item1;
             arrIndex = updateAdjacentPieces(yIndex, xIndex, nextRow, nextCol, oppositeAdjacentPieces, arrIndex).Item2;
-            /*
-            if (BoardArr[yIndex, xIndex + nextCol] == oppositePieceId)
-            {
-                //MessageBox.Show("T1");
-                oppositeAdjacentPieces[arrIndex, 0] = yIndex;
-                oppositeAdjacentPieces[arrIndex, 1] = xIndex + nextCol;
-                arrIndex++;
-            }
-            // Checks left
-            if (BoardArr[yIndex, xIndex + prevCol] == oppositePieceId)
-            {
-                //MessageBox.Show("T2");
-                oppositeAdjacentPieces[arrIndex, 0] = yIndex;
-                oppositeAdjacentPieces[arrIndex, 1] = xIndex + prevCol;
-                arrIndex++;
-            }
-            // Checks top
-            if (BoardArr[yIndex + prevRow, xIndex] == oppositePieceId)
-            {
-                //MessageBox.Show("T3");
-                oppositeAdjacentPieces[arrIndex, 0] = yIndex + prevRow;
-                oppositeAdjacentPieces[arrIndex, 1] = xIndex;
-                arrIndex++;
-            }
-            // Checks bottom
-            if (BoardArr[yIndex + nextRow, xIndex] == oppositePieceId)
-            {
-                //MessageBox.Show("T4");
-                oppositeAdjacentPieces[arrIndex, 0] = yIndex + nextRow;
-                oppositeAdjacentPieces[arrIndex, 1] = xIndex;
-                arrIndex++;
-            }
-            // Checks top right
-            if (BoardArr[yIndex + prevRow, xIndex + nextCol] == oppositePieceId)
-            {
-                //MessageBox.Show("T5");
-                oppositeAdjacentPieces[arrIndex, 0] = yIndex + prevRow;
-                oppositeAdjacentPieces[arrIndex, 1] = xIndex + nextCol;
-                arrIndex++;
-            }
-            // Checks top left
-            if (BoardArr[yIndex + prevRow, xIndex + prevCol] == oppositePieceId)
-            {
-                //MessageBox.Show("T6");
-                oppositeAdjacentPieces[arrIndex, 0] = yIndex + prevRow;
-                oppositeAdjacentPieces[arrIndex, 1] = xIndex + prevCol;
-                arrIndex++;
-            }
-            // Checks bottom left
-            if (BoardArr[yIndex + nextRow, xIndex + prevCol] == oppositePieceId)
-            {
-                //MessageBox.Show("T7");
-                oppositeAdjacentPieces[arrIndex, 0] = yIndex + nextRow;
-                oppositeAdjacentPieces[arrIndex, 1] = xIndex + prevCol;
-                arrIndex++;
-            }
-            // Checks bottom right
-            if (BoardArr[yIndex + nextRow, xIndex + nextCol] == oppositePieceId)
-            {
-                //MessageBox.Show("T8");
-                oppositeAdjacentPieces[arrIndex, 0] = yIndex + nextRow;
-                oppositeAdjacentPieces[arrIndex, 1] = xIndex + nextCol;
-                arrIndex++;
-            }
-            */
 
             return oppositeAdjacentPieces;
         }
 
-        // CLEEEEEEEEEEEAN
         public bool HorizontalCheck()
         {
             Illegal = true;
@@ -361,7 +293,6 @@ namespace othello
             return Illegal; // If false is returned, move is not illegal.
         }
 
-        // CLEEEEEEEEEEEAN
         public bool VerticalCheck()
         {
             Illegal = true;
@@ -553,7 +484,12 @@ namespace othello
             bool hor = HorizontalCheck();
             bool diag = DiagCheck();
 
-            if (!vert || !hor || !diag)
+            if (BoardArr[X - 1, Y - 1] != 10)
+            {
+                Illegal = false;
+            }
+
+            else if (!vert || !hor || !diag)
             {
                 Illegal = false;
             } else

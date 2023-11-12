@@ -25,13 +25,21 @@ namespace othello
             {
                 for(int x = 0; x < BoardCol; x++)
                 {
-                    //MessageBox.Show($"}");
-                    IllegalMove illegalCheck = new IllegalMove(BoardArr, CurrentPlayer, x + 1, y + 1);
-                    bool isLegal = illegalCheck.checkAllSides();
-                    if(isLegal == false)
+                    if (BoardArr[y, x] != 10)
                     {
-                        Valid = true; // If there is one valid move, then player can play move
+                        
                     }
+                    else
+                    {
+                        IllegalMove illegalCheck = new IllegalMove(BoardArr, CurrentPlayer, x + 1, y + 1);
+                        bool isLegal = illegalCheck.checkAllSides();
+                        if (isLegal == false)
+                        {
+                            //MessageBox.Show($"{y}, {x}");
+                            Valid = true; // If there is one valid move, then player can play move
+                        }
+                    }
+                    
                 }
             }
             return Valid;

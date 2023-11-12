@@ -15,29 +15,6 @@ namespace othello
         public Form1()
         {
             InitializeComponent();
-
-            Point top = new Point(10, 10);
-            Point bottom = new Point(10, 10);
-
-            gameBoardData = this.MakeBoardArray();
-
-            try
-            {
-                _gameBoardGui = new GameboardImageArray(this, gameBoardData, top, bottom, 0, tileImageDirPath);
-                _gameBoardGui.TileClicked += new GameboardImageArray.TileClickedEventDelegate(GameTileClicked);
-                _gameBoardGui.UpdateBoardGui(gameBoardData);
-            }
-            catch (Exception ex)
-            {
-                DialogResult result = MessageBox.Show(ex.ToString(), "Game board has size problem", MessageBoxButtons.OK);
-                this.Close();
-            }
-
-            gameEngine.BoardArray = gameBoardData;
-            gameEngine.P1 = new Player("Player 1", 0, 0);
-            gameEngine.P2 = new Player("Player 2", 0, 1);
-            gameEngine.CurrentPlayer = gameEngine.P1;
-            gameEngine.GameOver = false;
         }
 
         private int[,] MakeBoardArray()
@@ -57,6 +34,7 @@ namespace othello
             boardArray[3, 4] = 0;
             boardArray[4, 4] = 1;
             boardArray[4, 3] = 0;
+            //boardArray[2, 4] = 0;
 
 
             return boardArray;
@@ -64,12 +42,38 @@ namespace othello
 
         private Player getOppositePlayer(Player player)
         {
-            if(player == gameEngine.P1)
+            if (player == gameEngine.P1)
             {
                 return gameEngine.P2;
-            } else
+            }
+            else
             {
                 return gameEngine.P1;
+            }
+        }
+
+        private bool checkIfSelectedIsPiece(int row, int col)
+        {
+            if (gameBoardData[row, col] != 10)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private void updateCurrentPlayerGUI()
+        {
+            if(gameEngine.CurrentPlayer == gameEngine.P1)
+            {
+                label1.ForeColor = Color.Crimson;
+                label2.ForeColor = Color.Black;
+            } else
+            {
+                label2.ForeColor = Color.Crimson;
+                label1.ForeColor = Color.Black;
             }
         }
 
@@ -84,16 +88,31 @@ namespace othello
             ValidMove validMoveForCurrentPlayer = new ValidMove(gameEngine.BoardArray, gameEngine.CurrentPlayer, -1, -1); // Valid move does not need x and y
             ValidMove validMoveForOppositePlayer = new ValidMove(gameEngine.BoardArray, oppositePlayer, -1, -1);
 
-            if (illegalMove.checkAllSides() == false)
+
+            //MessageBox.Show($"{validMoveForCurrentPlayer.checkForAnyValidMoves(NUM_OF_BOARD_ROWS, NUM_OF_BOARD_COL)}");
+            //MessageBox.Show($"{validMoveForOppositePlayer.checkForAnyValidMoves(NUM_OF_BOARD_ROWS, NUM_OF_BOARD_COL)}");
+
+            if (checkIfSelectedIsPiece(selectionRow, selectionCol) == false)
             {
-                if(validMoveForCurrentPlayer.checkForAnyValidMoves(NUM_OF_BOARD_ROWS, NUM_OF_BOARD_COL))
+                MessageBox.Show("You cannot select your own piece");
+            }
+            else if (validMoveForCurrentPlayer.checkForAnyValidMoves(NUM_OF_BOARD_ROWS, NUM_OF_BOARD_COL) == false && validMoveForOppositePlayer.checkForAnyValidMoves(NUM_OF_BOARD_ROWS, NUM_OF_BOARD_COL) == false)
+            {
+                MessageBox.Show("Neither player has a legal move. Game end");
+            }
+            else if (validMoveForCurrentPlayer.checkForAnyValidMoves(NUM_OF_BOARD_ROWS, NUM_OF_BOARD_COL) == false)
+            {
+                MessageBox.Show($"{gameEngine.CurrentPlayer.Name} does not have a legal move");
+                gameEngine.UpdateCurrentPlayer();
+                _gameBoardGui.UpdateBoardGui(gameBoardData);
+            }
+            else if (illegalMove.checkAllSides() == false)
+            {
+                if (validMoveForCurrentPlayer.checkForAnyValidMoves(NUM_OF_BOARD_ROWS, NUM_OF_BOARD_COL))
                 {
                     SimulateMove s1 = new SimulateMove(gameEngine.BoardArray, gameEngine.CurrentPlayer, selectionCol + 1, selectionRow + 1);
                     s1.updateBoard(selectionCol, selectionRow);
                     gameBoardData[selectionRow, selectionCol] = gameEngine.CurrentPlayer.ID;
-                    gameBoardData = s1.BoardArr;
-
-                    s1.updateAllFlankPieces(NUM_OF_BOARD_ROWS, NUM_OF_BOARD_COL);
                     gameBoardData = s1.BoardArr;
 
                     s1.updateBoard(selectionCol, selectionRow);
@@ -102,18 +121,50 @@ namespace othello
                     _gameBoardGui.UpdateBoardGui(gameBoardData);
 
                     gameEngine.UpdateCurrentPlayer();
-                } else if(!validMoveForCurrentPlayer.checkForAnyValidMoves(NUM_OF_BOARD_ROWS, NUM_OF_BOARD_COL) && !validMoveForOppositePlayer.checkForAnyValidMoves(NUM_OF_BOARD_ROWS, NUM_OF_BOARD_COL))
-                {
-                    MessageBox.Show("Neither player has a legal move. Game end");
+                    updateCurrentPlayerGUI();
                 }
-                else
-                {
-                    MessageBox.Show($"{gameEngine.CurrentPlayer} does not have a legal move");
-                    _gameBoardGui.UpdateBoardGui(gameBoardData);
-                } 
+            }
+            else
+            {
+                //MessageBox.Show($"You just clicked the square at row {selectionRow + 1} and col {selectionCol + 1}");
+                MessageBox.Show($"This is not a legal move");
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if(textBox1.Text == "" || textBox2.Text == "")
+            {
+                MessageBox.Show("Please enter player names");
             } else
             {
-                MessageBox.Show($"You just clicked the square at row {selectionRow + 1} and col {selectionCol + 1}");
+                button1.Hide();
+                textBox1.Enabled = false;
+                textBox2.Enabled = false;
+                updateCurrentPlayerGUI();
+
+                Point top = new Point(100, 50);
+                Point bottom = new Point(100, 200);
+
+                gameBoardData = this.MakeBoardArray();
+
+                try
+                {
+                    _gameBoardGui = new GameboardImageArray(this, gameBoardData, top, bottom, 0, tileImageDirPath);
+                    _gameBoardGui.TileClicked += new GameboardImageArray.TileClickedEventDelegate(GameTileClicked);
+                    _gameBoardGui.UpdateBoardGui(gameBoardData);
+                }
+                catch (Exception ex)
+                {
+                    DialogResult result = MessageBox.Show(ex.ToString(), "Game board has size problem", MessageBoxButtons.OK);
+                    this.Close();
+                }
+
+                gameEngine.BoardArray = gameBoardData;
+                gameEngine.P1 = new Player(textBox1.Text, 2, 0);
+                gameEngine.P2 = new Player(textBox2.Text, 2, 1);
+                gameEngine.CurrentPlayer = gameEngine.P1;
+                gameEngine.GameOver = false;
             }
         }
     }
