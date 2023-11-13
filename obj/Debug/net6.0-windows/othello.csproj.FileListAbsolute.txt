@@ -16,3 +16,5 @@ C:\Users\BilalUddin\OneDrive - Energy & Compliance Technology Ltd\Documents\code
 C:\Users\BilalUddin\OneDrive - Energy & Compliance Technology Ltd\Documents\code\projects\othello\project\othello\obj\Debug\net6.0-windows\othello.genruntimeconfig.cache
 C:\Users\BilalUddin\OneDrive - Energy & Compliance Technology Ltd\Documents\code\projects\othello\project\othello\obj\Debug\net6.0-windows\ref\othello.dll
 C:\Users\BilalUddin\OneDrive - Energy & Compliance Technology Ltd\Documents\code\projects\othello\project\othello\obj\Debug\net6.0-windows\othello.Properties.Resources.resources
+C:\Users\BilalUddin\OneDrive - Energy & Compliance Technology Ltd\Documents\code\projects\othello\project\othello\obj\Debug\net6.0-windows\Interop.SpeechLib.dll
+C:\Users\BilalUddin\OneDrive - Energy & Compliance Technology Ltd\Documents\code\projects\othello\project\othello\obj\Debug\net6.0-windows\othello.csproj.ResolveComReference.cache

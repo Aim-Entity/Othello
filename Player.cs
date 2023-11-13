@@ -20,6 +20,7 @@ namespace othello
         public int TokenCount
         {
             get => _tokenCount;
+            set => _tokenCount = value;
         }
 
         public int ID

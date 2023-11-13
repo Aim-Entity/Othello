@@ -201,7 +201,7 @@ namespace othello
             return oppositeAdjacentPieces;
         }
 
-        public bool HorizontalCheck()
+        public virtual bool HorizontalCheck()
         {
             Illegal = true;
             // Gets all enemy pieces that is touching the new piece and places it in a 9 by 2 array
@@ -293,7 +293,7 @@ namespace othello
             return Illegal; // If false is returned, move is not illegal.
         }
 
-        public bool VerticalCheck()
+        public virtual bool VerticalCheck()
         {
             Illegal = true;
             // Gets all enemy pieces that is touching the new piece and places it in a 9 by 2 array
@@ -385,7 +385,7 @@ namespace othello
         }
 
         // CLEEEEEEEEEEEAN
-        public bool DiagCheck()
+        public virtual bool DiagCheck()
         {
             Illegal = true;
             // Gets all enemy pieces that is touching the new piece and places it in a 9 by 2 array
@@ -478,7 +478,7 @@ namespace othello
             return Illegal; // If false is returned, move is not illegal.
         }
 
-        public bool checkAllSides()
+        public virtual bool checkAllSides()
         {
             bool vert = VerticalCheck();
             bool hor = HorizontalCheck();

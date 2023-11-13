@@ -142,7 +142,7 @@ namespace othello
         }
 
         // CLEEEEEEEEEEEAN
-        public void updateBoard(int placedX, int placedY)
+        public virtual void updateBoard(int placedX, int placedY)
         {
 
             /*

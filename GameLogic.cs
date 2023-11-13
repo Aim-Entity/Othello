@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace othello
 {
-    internal class GameLogic
+    internal abstract class GameLogic
     {
         public GameLogic(int[,] boardArr, Player currentPlayer, int y, int x)
         {

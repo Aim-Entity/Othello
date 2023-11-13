@@ -37,9 +37,17 @@
             textBox1 = new TextBox();
             pictureBox1 = new PictureBox();
             label1 = new Label();
+            menuStrip1 = new MenuStrip();
+            dToolStripMenuItem = new ToolStripMenuItem();
+            sToolStripMenuItem = new ToolStripMenuItem();
+            fToolStripMenuItem = new ToolStripMenuItem();
+            speakToolStripMenuItem = new ToolStripMenuItem();
+            informationPanelToolStripMenuItem = new ToolStripMenuItem();
+            sToolStripMenuItem1 = new ToolStripMenuItem();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -119,19 +127,78 @@
             label1.TabIndex = 0;
             label1.Text = "2X";
             // 
+            // menuStrip1
+            // 
+            menuStrip1.ImageScalingSize = new Size(20, 20);
+            menuStrip1.Items.AddRange(new ToolStripItem[] { dToolStripMenuItem, fToolStripMenuItem, sToolStripMenuItem1 });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(702, 28);
+            menuStrip1.TabIndex = 1;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // dToolStripMenuItem
+            // 
+            dToolStripMenuItem.BackColor = Color.FromArgb(224, 224, 224);
+            dToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { sToolStripMenuItem });
+            dToolStripMenuItem.Name = "dToolStripMenuItem";
+            dToolStripMenuItem.Size = new Size(62, 24);
+            dToolStripMenuItem.Text = "Game";
+            // 
+            // sToolStripMenuItem
+            // 
+            sToolStripMenuItem.Name = "sToolStripMenuItem";
+            sToolStripMenuItem.Size = new Size(165, 26);
+            sToolStripMenuItem.Text = "New Game";
+            sToolStripMenuItem.Visible = false;
+            sToolStripMenuItem.Click += sToolStripMenuItem_Click;
+            // 
+            // fToolStripMenuItem
+            // 
+            fToolStripMenuItem.BackColor = Color.FromArgb(224, 224, 224);
+            fToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { speakToolStripMenuItem, informationPanelToolStripMenuItem });
+            fToolStripMenuItem.Name = "fToolStripMenuItem";
+            fToolStripMenuItem.Size = new Size(76, 24);
+            fToolStripMenuItem.Text = "Settings";
+            // 
+            // speakToolStripMenuItem
+            // 
+            speakToolStripMenuItem.CheckOnClick = true;
+            speakToolStripMenuItem.Name = "speakToolStripMenuItem";
+            speakToolStripMenuItem.Size = new Size(224, 26);
+            speakToolStripMenuItem.Text = "Speak";
+            // 
+            // informationPanelToolStripMenuItem
+            // 
+            informationPanelToolStripMenuItem.Name = "informationPanelToolStripMenuItem";
+            informationPanelToolStripMenuItem.Size = new Size(224, 26);
+            informationPanelToolStripMenuItem.Text = "Information Panel";
+            // 
+            // sToolStripMenuItem1
+            // 
+            sToolStripMenuItem1.BackColor = Color.FromArgb(224, 224, 224);
+            sToolStripMenuItem1.Name = "sToolStripMenuItem1";
+            sToolStripMenuItem1.Size = new Size(55, 24);
+            sToolStripMenuItem1.Text = "Help";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(702, 673);
             Controls.Add(panel1);
+            Controls.Add(menuStrip1);
+            MainMenuStrip = menuStrip1;
             Name = "Form1";
             Text = "Form1";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -144,5 +211,12 @@
         private PictureBox pictureBox2;
         private Label label2;
         private TextBox textBox1;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem dToolStripMenuItem;
+        private ToolStripMenuItem sToolStripMenuItem;
+        private ToolStripMenuItem fToolStripMenuItem;
+        private ToolStripMenuItem sToolStripMenuItem1;
+        private ToolStripMenuItem speakToolStripMenuItem;
+        private ToolStripMenuItem informationPanelToolStripMenuItem;
     }
 }

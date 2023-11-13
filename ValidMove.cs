@@ -18,7 +18,7 @@ namespace othello
             Valid = false; //Invalid by default
         }
 
-        public bool checkForAnyValidMoves(int BoardRow, int BoardCol)
+        public virtual bool checkForAnyValidMoves(int BoardRow, int BoardCol)
         {
             int num = 0;
             for(int y = 0; y <  BoardRow; y++)
