@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             panel1 = new Panel();
+            label4 = new Label();
+            label3 = new Label();
             button1 = new Button();
             textBox2 = new TextBox();
             pictureBox2 = new PictureBox();
@@ -40,6 +42,7 @@
             menuStrip1 = new MenuStrip();
             dToolStripMenuItem = new ToolStripMenuItem();
             sToolStripMenuItem = new ToolStripMenuItem();
+            saveGameToolStripMenuItem = new ToolStripMenuItem();
             fToolStripMenuItem = new ToolStripMenuItem();
             speakToolStripMenuItem = new ToolStripMenuItem();
             informationPanelToolStripMenuItem = new ToolStripMenuItem();
@@ -53,6 +56,8 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(255, 192, 192);
+            panel1.Controls.Add(label4);
+            panel1.Controls.Add(label3);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(textBox2);
             panel1.Controls.Add(pictureBox2);
@@ -65,9 +70,35 @@
             panel1.Size = new Size(640, 166);
             panel1.TabIndex = 0;
             // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.BackColor = Color.Black;
+            label4.ForeColor = SystemColors.ButtonHighlight;
+            label4.Location = new Point(468, 56);
+            label4.Name = "label4";
+            label4.Padding = new Padding(30, 3, 30, 3);
+            label4.Size = new Size(116, 26);
+            label4.TabIndex = 8;
+            label4.Text = "To Play";
+            label4.Visible = false;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.BackColor = Color.Black;
+            label3.ForeColor = SystemColors.ButtonHighlight;
+            label3.Location = new Point(147, 56);
+            label3.Name = "label3";
+            label3.Padding = new Padding(30, 3, 30, 3);
+            label3.Size = new Size(116, 26);
+            label3.TabIndex = 7;
+            label3.Text = "To Play";
+            label3.Visible = false;
+            // 
             // button1
             // 
-            button1.Location = new Point(66, 27);
+            button1.Location = new Point(12, 13);
             button1.Name = "button1";
             button1.Size = new Size(124, 41);
             button1.TabIndex = 6;
@@ -140,7 +171,7 @@
             // dToolStripMenuItem
             // 
             dToolStripMenuItem.BackColor = Color.FromArgb(224, 224, 224);
-            dToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { sToolStripMenuItem });
+            dToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { sToolStripMenuItem, saveGameToolStripMenuItem });
             dToolStripMenuItem.Name = "dToolStripMenuItem";
             dToolStripMenuItem.Size = new Size(62, 24);
             dToolStripMenuItem.Text = "Game";
@@ -148,10 +179,17 @@
             // sToolStripMenuItem
             // 
             sToolStripMenuItem.Name = "sToolStripMenuItem";
-            sToolStripMenuItem.Size = new Size(165, 26);
+            sToolStripMenuItem.Size = new Size(166, 26);
             sToolStripMenuItem.Text = "New Game";
             sToolStripMenuItem.Visible = false;
             sToolStripMenuItem.Click += sToolStripMenuItem_Click;
+            // 
+            // saveGameToolStripMenuItem
+            // 
+            saveGameToolStripMenuItem.Name = "saveGameToolStripMenuItem";
+            saveGameToolStripMenuItem.Size = new Size(166, 26);
+            saveGameToolStripMenuItem.Text = "Save Game";
+            saveGameToolStripMenuItem.Click += saveGameToolStripMenuItem_Click;
             // 
             // fToolStripMenuItem
             // 
@@ -165,13 +203,13 @@
             // 
             speakToolStripMenuItem.CheckOnClick = true;
             speakToolStripMenuItem.Name = "speakToolStripMenuItem";
-            speakToolStripMenuItem.Size = new Size(224, 26);
+            speakToolStripMenuItem.Size = new Size(209, 26);
             speakToolStripMenuItem.Text = "Speak";
             // 
             // informationPanelToolStripMenuItem
             // 
             informationPanelToolStripMenuItem.Name = "informationPanelToolStripMenuItem";
-            informationPanelToolStripMenuItem.Size = new Size(224, 26);
+            informationPanelToolStripMenuItem.Size = new Size(209, 26);
             informationPanelToolStripMenuItem.Text = "Information Panel";
             // 
             // sToolStripMenuItem1
@@ -188,9 +226,10 @@
             ClientSize = new Size(702, 673);
             Controls.Add(panel1);
             Controls.Add(menuStrip1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
             Name = "Form1";
-            Text = "Form1";
+            Text = "O'Neillo Game";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
@@ -218,5 +257,8 @@
         private ToolStripMenuItem sToolStripMenuItem1;
         private ToolStripMenuItem speakToolStripMenuItem;
         private ToolStripMenuItem informationPanelToolStripMenuItem;
+        private ToolStripMenuItem saveGameToolStripMenuItem;
+        private Label label4;
+        private Label label3;
     }
 }

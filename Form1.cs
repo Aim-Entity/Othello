@@ -16,6 +16,13 @@ namespace othello
         public Form1()
         {
             InitializeComponent();
+
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+
+            this.MinimizeBox = false;
+
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void generateNewBoard()
@@ -89,13 +96,13 @@ namespace othello
         {
             if (gameEngine.CurrentPlayer == gameEngine.P1)
             {
-                label1.ForeColor = Color.Crimson;
-                label2.ForeColor = Color.Black;
+                label3.Visible = false;
+                label4.Visible = true;
             }
             else
             {
-                label2.ForeColor = Color.Crimson;
-                label1.ForeColor = Color.Black;
+                label3.Visible = true;
+                label4.Visible = false;
             }
         }
 
@@ -118,8 +125,8 @@ namespace othello
             gameEngine.P1.TokenCount = countTokensForPlayer(gameEngine.P1);
             gameEngine.P2.TokenCount = countTokensForPlayer(gameEngine.P2);
 
-            label1.Text = $"{gameEngine.P1.TokenCount}";
-            label2.Text = $"{gameEngine.P2.TokenCount}";
+            label2.Text = $"{gameEngine.P1.TokenCount}";
+            label1.Text = $"{gameEngine.P2.TokenCount}";
         }
 
         private bool checkForValidMoves(ValidMove v1)
@@ -153,7 +160,7 @@ namespace othello
                 if (checkForValidMoves(validMoveForCurrentPlayer))
                 {
                     updateBoardData(selectionRow, selectionCol);
-                    
+
                 }
             }
             else
@@ -166,11 +173,11 @@ namespace othello
         private int countTokensForPlayer(Player player)
         {
             int count = 0;
-            for(int y = 0; y < NUM_OF_BOARD_ROWS; y++)
+            for (int y = 0; y < NUM_OF_BOARD_ROWS; y++)
             {
-                for(int x = 0; x < NUM_OF_BOARD_COL;  x++)
+                for (int x = 0; x < NUM_OF_BOARD_COL; x++)
                 {
-                    if (gameBoardData[y,x] == player.ID)
+                    if (gameBoardData[y, x] == player.ID)
                     {
                         count++;
                     }
@@ -189,31 +196,33 @@ namespace othello
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text == "" || textBox2.Text == "")
-            {
-                MessageBox.Show("Please enter player names");
-            }
-            else
-            {
-                button1.Hide();
-                sToolStripMenuItem.Visible = true;
-                textBox1.Enabled = false;
-                textBox2.Enabled = false;
-                updateCurrentPlayerGUI();
+            if(textBox1.Text == "") textBox1.Text = "Player 1#";
+            if(textBox2.Text == "") textBox2.Text = "Player 2#";
 
-                generateNewBoard();
+            button1.Hide();
+            sToolStripMenuItem.Visible = true;
+            textBox1.Enabled = false;
+            textBox2.Enabled = false;
+            updateCurrentPlayerGUI();
 
-                gameEngine.BoardArray = gameBoardData;
-                gameEngine.P1 = new Player(textBox1.Text, 2, 0);
-                gameEngine.P2 = new Player(textBox2.Text, 2, 1);
-                gameEngine.CurrentPlayer = gameEngine.P1;
-                gameEngine.GameOver = false;
-            }
+            generateNewBoard();
+
+            gameEngine.P1 = new Player(textBox1.Text, 2, 0);
+            gameEngine.P2 = new Player(textBox2.Text, 2, 1);
+            gameEngine.BoardArray = gameBoardData;
+            gameEngine.CurrentPlayer = gameEngine.P1;
+            gameEngine.GameOver = false;
         }
 
         private void sToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Restart();
+        }
+
+        private void saveGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Save save = new Save("game1");
+            save.loadJsonData();
         }
     }
 }

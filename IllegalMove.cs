@@ -484,12 +484,12 @@ namespace othello
             bool hor = HorizontalCheck();
             bool diag = DiagCheck();
 
-            if (BoardArr[X - 1, Y - 1] != 10)
-            {
-                Illegal = false;
-            }
+            //if (BoardArr[X - 1, Y - 1] != 10)
+            //{
+            //    Illegal = true;
+            //}
 
-            else if (!vert || !hor || !diag)
+            if (!vert || !hor || !diag)
             {
                 Illegal = false;
             } else
