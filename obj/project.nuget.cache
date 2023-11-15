@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Xe8RnLgp0AEYCr1wH6iIsEhxaSqXbNqC0W1W8J9YwHrljyjFKuaCjbMddeRzpbPkwV5zntnJN0JMEDPIRISaJQ==",
+  "dgSpecHash": "1Sjq2U9UPa04weDg7rAyXTbKHtgZUP8xH55z82dMKVBX7lwYopJ/cuCeWNsmJO6D6M7Fvu+KBuFrCEL0YqCNVg==",
   "success": true,
   "projectFilePath": "C:\\Users\\BilalUddin\\OneDrive - Energy & Compliance Technology Ltd\\Documents\\code\\projects\\othello\\project\\othello\\othello.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\BilalUddin\\.nuget\\packages\\system.speech\\8.0.0\\system.speech.8.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

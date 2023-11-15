@@ -1,6 +1,6 @@
 using GameboardGUI;
 using System;
-//using System.Speech.Synthesis;
+using System.Speech.Synthesis;
 namespace othello
 {
     public partial class Form1 : Form
@@ -196,11 +196,10 @@ namespace othello
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(textBox1.Text == "") textBox1.Text = "Player 1#";
-            if(textBox2.Text == "") textBox2.Text = "Player 2#";
+            if (textBox1.Text == "") textBox1.Text = "Player 1#";
+            if (textBox2.Text == "") textBox2.Text = "Player 2#";
 
             button1.Hide();
-            sToolStripMenuItem.Visible = true;
             textBox1.Enabled = false;
             textBox2.Enabled = false;
             updateCurrentPlayerGUI();
@@ -216,13 +215,25 @@ namespace othello
 
         private void sToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Application.Restart();
+            var result = MessageBox.Show("Would you like to save your current game?", "Yes", MessageBoxButtons.YesNoCancel);
+
+            if(result == DialogResult.Yes)
+            {
+                Form2 form2 = new Form2();
+                form2.Show();
+            } else if (result == DialogResult.No)
+            {
+                Application.Restart();
+            }
         }
 
         private void saveGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Save save = new Save("game1");
-            save.loadJsonData();
+            Save save = new Save("game_data.json");
+
+            Form2 form2 = new Form2();
+            save.loadJsonData(form2);
+            form2.Show();
         }
     }
 }

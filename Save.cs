@@ -41,7 +41,7 @@ namespace othello
         public string SaveFileName
         {
             get => _saveFileName;
-            set => _saveFileName = value;
+            set => _saveFileName = Directory.GetCurrentDirectory() + @"\assets\" + value;
         }
 
         public Save(string saveFileName)
@@ -54,10 +54,12 @@ namespace othello
             return new Tuple<int[,], Player, Player, Player>(BoardArr, CurrentPlayer, P1, P2);
         }
 
-        public void loadJsonData()
+        public Form2 loadJsonData(Form2 form)
         {
-            string text = File.ReadAllText(@"./game_data.json");
+            string text = File.ReadAllText(SaveFileName);
             MessageBox.Show(text);
+
+            return form;
         }
     }
 }

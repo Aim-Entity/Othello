@@ -19,3 +19,7 @@ C:\Users\BilalUddin\OneDrive - Energy & Compliance Technology Ltd\Documents\code
 C:\Users\BilalUddin\OneDrive - Energy & Compliance Technology Ltd\Documents\code\projects\othello\project\othello\obj\Debug\net6.0-windows\Interop.SpeechLib.dll
 C:\Users\BilalUddin\OneDrive - Energy & Compliance Technology Ltd\Documents\code\projects\othello\project\othello\obj\Debug\net6.0-windows\othello.csproj.ResolveComReference.cache
 C:\Users\BilalUddin\OneDrive - Energy & Compliance Technology Ltd\Documents\code\projects\othello\project\othello\obj\Debug\net6.0-windows\othello.Form2.resources
+C:\Users\BilalUddin\OneDrive - Energy & Compliance Technology Ltd\Documents\code\projects\othello\project\othello\bin\Debug\net6.0-windows\System.Speech.dll
+C:\Users\BilalUddin\OneDrive - Energy & Compliance Technology Ltd\Documents\code\projects\othello\project\othello\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Speech.dll
+C:\Users\BilalUddin\OneDrive - Energy & Compliance Technology Ltd\Documents\code\projects\othello\project\othello\obj\Debug\net6.0-windows\othello.csproj.AssemblyReference.cache
+C:\Users\BilalUddin\OneDrive - Energy & Compliance Technology Ltd\Documents\code\projects\othello\project\othello\obj\Debug\net6.0-windows\othello.csproj.CopyComplete
