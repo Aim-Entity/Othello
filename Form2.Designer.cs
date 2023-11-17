@@ -29,34 +29,46 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            checkedListBox1 = new CheckedListBox();
+            button6 = new Button();
             label2 = new Label();
             textBox1 = new TextBox();
-            button5 = new Button();
-            button4 = new Button();
-            button3 = new Button();
-            button2 = new Button();
-            button1 = new Button();
             label1 = new Label();
-            button6 = new Button();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(255, 192, 192);
+            panel1.Controls.Add(checkedListBox1);
             panel1.Controls.Add(button6);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(textBox1);
-            panel1.Controls.Add(button5);
-            panel1.Controls.Add(button4);
-            panel1.Controls.Add(button3);
-            panel1.Controls.Add(button2);
-            panel1.Controls.Add(button1);
             panel1.Controls.Add(label1);
             panel1.Location = new Point(123, 23);
             panel1.Name = "panel1";
             panel1.Size = new Size(283, 402);
             panel1.TabIndex = 0;
+            // 
+            // checkedListBox1
+            // 
+            checkedListBox1.FormattingEnabled = true;
+            checkedListBox1.Items.AddRange(new object[] { "Blank", "Blank", "Blank", "Blank", "Blank" });
+            checkedListBox1.Location = new Point(38, 71);
+            checkedListBox1.Name = "checkedListBox1";
+            checkedListBox1.Size = new Size(190, 202);
+            checkedListBox1.TabIndex = 9;
+            checkedListBox1.SelectedIndexChanged += checkedListBox1_SelectedIndexChanged;
+            // 
+            // button6
+            // 
+            button6.Location = new Point(88, 355);
+            button6.Name = "button6";
+            button6.Size = new Size(84, 31);
+            button6.TabIndex = 8;
+            button6.Text = "Save";
+            button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
             // 
             // label2
             // 
@@ -74,56 +86,6 @@
             textBox1.Size = new Size(239, 27);
             textBox1.TabIndex = 6;
             // 
-            // button5
-            // 
-            button5.Location = new Point(13, 244);
-            button5.Name = "button5";
-            button5.Size = new Size(239, 29);
-            button5.TabIndex = 5;
-            button5.Text = "(un-named)";
-            button5.TextAlign = ContentAlignment.MiddleLeft;
-            button5.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            button4.Location = new Point(13, 200);
-            button4.Name = "button4";
-            button4.Size = new Size(239, 29);
-            button4.TabIndex = 4;
-            button4.Text = "(un-named)";
-            button4.TextAlign = ContentAlignment.MiddleLeft;
-            button4.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            button3.Location = new Point(13, 156);
-            button3.Name = "button3";
-            button3.Size = new Size(239, 29);
-            button3.TabIndex = 3;
-            button3.Text = "(un-named)";
-            button3.TextAlign = ContentAlignment.MiddleLeft;
-            button3.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            button2.Location = new Point(13, 112);
-            button2.Name = "button2";
-            button2.Size = new Size(239, 29);
-            button2.TabIndex = 2;
-            button2.Text = "(un-named)";
-            button2.TextAlign = ContentAlignment.MiddleLeft;
-            button2.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            button1.Location = new Point(13, 65);
-            button1.Name = "button1";
-            button1.Size = new Size(239, 31);
-            button1.TabIndex = 1;
-            button1.Text = "(un-named)";
-            button1.TextAlign = ContentAlignment.MiddleLeft;
-            button1.UseVisualStyleBackColor = true;
-            // 
             // label1
             // 
             label1.AutoSize = true;
@@ -132,15 +94,6 @@
             label1.Size = new Size(125, 20);
             label1.TabIndex = 0;
             label1.Text = "Select A Save File";
-            // 
-            // button6
-            // 
-            button6.Location = new Point(88, 355);
-            button6.Name = "button6";
-            button6.Size = new Size(84, 31);
-            button6.TabIndex = 8;
-            button6.Text = "Save";
-            button6.UseVisualStyleBackColor = true;
             // 
             // Form2
             // 
@@ -159,13 +112,9 @@
 
         private Panel panel1;
         private Label label1;
-        private Button button1;
         private TextBox textBox1;
-        private Button button5;
-        private Button button4;
-        private Button button3;
-        private Button button2;
         private Label label2;
         private Button button6;
+        private CheckedListBox checkedListBox1;
     }
 }

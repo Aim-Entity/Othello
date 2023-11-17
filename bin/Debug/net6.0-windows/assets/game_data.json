@@ -1,0 +1,87 @@
+[
+{
+	"FileName": "test1",
+	"BoardArr": [
+			[10, 10, 10, 10, 10, 10, 10, 10],
+			[10, 10, 10, 10, 10, 10, 10, 10],
+			[10, 10, 10, 10, 10, 10, 10, 10],
+			[10, 10, 10, 0, 1, 10, 10, 10],
+			[10, 10, 10, 1, 0, 0, 10, 10],
+			[10, 10, 10, 10, 10, 10, 10, 10],
+			[10, 10, 10, 10, 10, 10, 10, 10],
+			[10, 10, 10, 10, 10, 10, 10, 10]
+		],
+	"CurrentPlayerID": 0,
+	"P1": {
+		"Name": "test",
+		"TokenCount": 0,
+		"ID": 0
+		},
+	"P2": {
+		"Name": "test2",
+		"TokenCount": 0,
+		"ID": 1
+		}
+},
+{
+	"FileName": "test2",
+	"BoardArr": [[]],
+	"CurrentPlayerID": 0,
+	"P1": {
+		"Name": "test",
+		"TokenCount": 1,
+		"ID": 0
+		},
+	"P2": {
+		"Name": "test2",
+		"TokenCount": 1,
+		"ID": 1
+		}
+},
+{
+	"FileName": "test2",
+	"BoardArr": [[]],
+	"CurrentPlayerID": 0,
+	"P1": {
+		"Name": "test",
+		"TokenCount": 1,
+		"ID": 0
+		},
+	"P2": {
+		"Name": "test2",
+		"TokenCount": 1,
+		"ID": 1
+		}
+},
+{
+	"FileName": "test2",
+	"BoardArr": [[]],
+	"CurrentPlayerID": 0,
+	"P1": {
+		"Name": "test",
+		"TokenCount": 1,
+		"ID": 0
+		},
+	"P2": {
+		"Name": "test2",
+		"TokenCount": 1,
+		"ID": 1
+		}
+},
+{
+	"FileName": "test2",
+	"BoardArr": [[]],
+	"CurrentPlayerID": 0,
+	"P1": {
+		"Name": "test",
+		"TokenCount": 1,
+		"ID": 0
+		},
+	"P2": {
+		"Name": "test2",
+		"TokenCount": 1,
+		"ID": 1
+		}
+}
+
+]

@@ -13,14 +13,17 @@ namespace othello
         string tileImageDirPath = Directory.GetCurrentDirectory() + @"\assets\";
         GameEngine gameEngine = new GameEngine();
 
+        // These are global variables for the saving / loading
+
+        int SelectedFileIndex = -1; // initalise at -1 to signify nothing is selected
+        string RequestType; // POST = Save | GET = Load
+
         public Form1()
         {
             InitializeComponent();
 
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
-
-            this.MinimizeBox = false;
 
             this.StartPosition = FormStartPosition.CenterScreen;
         }
@@ -213,15 +216,43 @@ namespace othello
             gameEngine.GameOver = false;
         }
 
+        private void displayFiles(string requestType)
+        {
+            panel2.Visible = true;
+            disableInput(requestType);
+        }
+
+        private void disableInput(string requestType) // POST = save | GET = load
+        {
+            if (requestType == "POST")
+            {
+                textBox3.Enabled = true;
+                button6.Text = "Save";
+                RequestType = "POST";
+            }
+            else if (requestType == "GET")
+            {
+                textBox3.Enabled = false;
+                button6.Text = "Load";
+                RequestType = "GET";
+            }
+        }
+
+        private void hideFiles()
+        {
+            panel2.Visible = false;
+        }
+
         private void sToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var result = MessageBox.Show("Would you like to save your current game?", "Yes", MessageBoxButtons.YesNoCancel);
 
-            if(result == DialogResult.Yes)
+            if (result == DialogResult.Yes)
             {
-                Form2 form2 = new Form2();
+                Form2 form2 = new Form2("POST");
                 form2.Show();
-            } else if (result == DialogResult.No)
+            }
+            else if (result == DialogResult.No)
             {
                 Application.Restart();
             }
@@ -229,11 +260,76 @@ namespace othello
 
         private void saveGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Save save = new Save("game_data.json");
 
-            Form2 form2 = new Form2();
-            save.loadJsonData(form2);
-            form2.Show();
+        }
+
+        private void loadGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            displayFiles("GET");
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+            hideFiles();
+        }
+
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int iSelectedIndex = checkedListBox1.SelectedIndex;
+            if (iSelectedIndex == -1)
+                return;
+            for (int iIndex = 0; iIndex < checkedListBox1.Items.Count; iIndex++)
+                checkedListBox1.SetItemCheckState(iIndex, CheckState.Unchecked);
+            checkedListBox1.SetItemCheckState(iSelectedIndex, CheckState.Checked);
+            SelectedFileIndex = iSelectedIndex;
+
+            textBox3.Text = checkedListBox1.Text;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            // MessageBox.Show(RequestType);
+            if (RequestType == "GET" && SelectedFileIndex != -1)
+            {
+                Save JsonData = new Save("game_data.json");
+
+                SaveState payload = JsonData.loadJsonData()[SelectedFileIndex];
+                int[,] loadedBoardArr = payload.BoardArr;
+                Player loadedP1 = payload.P1;
+                Player loadedP2 = payload.P2;
+                Player loadedCurrentPlayer;
+
+                if(payload.CurrentPlayerID == 0)
+                {
+                    loadedCurrentPlayer = loadedP1;
+                } else
+                {
+                    loadedCurrentPlayer = loadedP2;
+                }
+
+                panel2.Visible = false;
+
+                if(_gameBoardGui == null) // If player is currently not in game, then generate new board instance.
+                {
+                    generateNewBoard();
+                    button1.Visible = false;
+                }
+
+                textBox1.Text = loadedP1.Name;
+                textBox2.Text = loadedP2.Name;
+
+                textBox1.Enabled = false;
+                textBox2.Enabled = false;
+
+                gameEngine.P1 = new Player(textBox1.Text, loadedP1.TokenCount, 0);
+                gameEngine.P2 = new Player(textBox2.Text, loadedP2.TokenCount, 1);
+                gameEngine.BoardArray = loadedBoardArr;
+                gameEngine.CurrentPlayer = loadedCurrentPlayer;
+                gameEngine.GameOver = false;
+
+                gameBoardData = gameEngine.BoardArray;
+                _gameBoardGui.UpdateBoardGui(gameBoardData);
+            }
         }
     }
 }

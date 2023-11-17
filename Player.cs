@@ -23,7 +23,7 @@ namespace othello
             set => _tokenCount = value;
         }
 
-        public int ID
+        public int ID // 0 = black 1 = white 10 = blank
         {
             get => _id;
         }

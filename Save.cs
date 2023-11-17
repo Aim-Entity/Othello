@@ -3,63 +3,62 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Text.Json;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace othello
 {
+    internal class SaveState
+    {
+        public string FileName {  get; set; }
+        public int[,] BoardArr { get; set; }
+
+        public int CurrentPlayerID { get; set; }
+
+        public Player CurrentPlayer { get; set; }
+
+        public Player P1 { get; set; }
+
+        public Player P2 { get; set; }
+
+        public SaveState()
+        {
+            if(CurrentPlayerID == 0)
+            {
+                CurrentPlayer = P1;
+            } else
+            {
+                CurrentPlayer = P2;
+            }
+        }
+    }
     internal class Save
     {
-        protected int[,] _boardArr;
-        public int[,] BoardArr
+        
+
+        protected string _jsonDir;
+        public string JsonDir
         {
-            get => _boardArr;
-            set => _boardArr = value;
+            get => _jsonDir;
+            set => _jsonDir = Directory.GetCurrentDirectory() + @"\assets\" + value;
         }
 
-        protected Player _currentPlayer;
-        public Player CurrentPlayer
+        public Save(string jsonDir)
         {
-            get => _currentPlayer;
-            set => _currentPlayer = value;
+            JsonDir = jsonDir;
         }
 
-        protected Player _p1;
-        public Player P1
+        public SaveState[] loadJsonData()
         {
-            get => _p1;
-            set => _p1 = value;
+            string jsonText = File.ReadAllText(JsonDir);
+            SaveState[] jsonData = JsonConvert.DeserializeObject<SaveState[]>(jsonText);
+
+            return jsonData;
         }
 
-        protected Player _p2;
-        public Player P2
+        public void saveDataToJson(int saveFileID)
         {
-            get => _p2;
-            set => _p2 = value;
-        }
 
-        protected string _saveFileName;
-        public string SaveFileName
-        {
-            get => _saveFileName;
-            set => _saveFileName = Directory.GetCurrentDirectory() + @"\assets\" + value;
-        }
-
-        public Save(string saveFileName)
-        {
-            _saveFileName = saveFileName;
-        }
-
-        public Tuple<int[,], Player, Player, Player> loadSaveFile()
-        {
-            return new Tuple<int[,], Player, Player, Player>(BoardArr, CurrentPlayer, P1, P2);
-        }
-
-        public Form2 loadJsonData(Form2 form)
-        {
-            string text = File.ReadAllText(SaveFileName);
-            MessageBox.Show(text);
-
-            return form;
         }
     }
 }

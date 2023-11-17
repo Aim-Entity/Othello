@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "1Sjq2U9UPa04weDg7rAyXTbKHtgZUP8xH55z82dMKVBX7lwYopJ/cuCeWNsmJO6D6M7Fvu+KBuFrCEL0YqCNVg==",
+  "dgSpecHash": "m7Cl5VH11pQ/ty8s6pvz+1ztL0qtvAS1C1onqpV+T1q8y0voMi45n5iM1qGhmso1dL/O6s87bdp7SJFO6J1pmw==",
   "success": true,
   "projectFilePath": "C:\\Users\\BilalUddin\\OneDrive - Energy & Compliance Technology Ltd\\Documents\\code\\projects\\othello\\project\\othello\\othello.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\BilalUddin\\.nuget\\packages\\json.net\\1.0.33\\json.net.1.0.33.nupkg.sha512",
+    "C:\\Users\\BilalUddin\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\BilalUddin\\.nuget\\packages\\system.speech\\8.0.0\\system.speech.8.0.0.nupkg.sha512"
   ],
   "logs": []
