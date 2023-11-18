@@ -25,10 +25,10 @@ namespace othello
         {
             if(CurrentPlayerID == 0)
             {
-                CurrentPlayer = P1;
+                CurrentPlayer = P2;
             } else
             {
-                CurrentPlayer = P2;
+                CurrentPlayer = P1;
             }
         }
     }
@@ -56,9 +56,30 @@ namespace othello
             return jsonData;
         }
 
-        public void saveDataToJson(int saveFileID)
+        public void saveDataToJson(int saveFileID, SaveState newFileSave)
         {
+            string jsonText = File.ReadAllText(JsonDir);
+            SaveState[] jsonData = JsonConvert.DeserializeObject<SaveState[]>(jsonText);
 
+            jsonData[saveFileID] = newFileSave;
+            string output = JsonConvert.SerializeObject(jsonData, Formatting.Indented);
+            File.WriteAllText(JsonDir, output);
+        }
+
+        public string[] getFileNames()
+        {
+            string jsonText = File.ReadAllText(JsonDir);
+            SaveState[] jsonData = JsonConvert.DeserializeObject<SaveState[]>(jsonText);
+
+            string[] names = { 
+                jsonData[0].FileName, 
+                jsonData[1].FileName, 
+                jsonData[2].FileName, 
+                jsonData[3].FileName,
+                jsonData[4].FileName
+            };
+
+            return names;
         }
     }
 }

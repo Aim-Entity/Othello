@@ -35,11 +35,6 @@ namespace othello
         /// <summary>
         /// Checks for illegal moves, valid moves and simulates the moves before migrating the changes to main board array
         /// </summary>
-        public void UpdateBoard()
-        {
-            // _boardArray will be updated
-            // Illegal Move, Valid Move and Simulate move objects will be created and check if correct move is made in this function
-        }
 
         public void UpdateCurrentPlayer()
         {

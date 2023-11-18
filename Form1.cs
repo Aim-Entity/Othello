@@ -195,6 +195,7 @@ namespace othello
             int selectionCol = _gameBoardGui.GetCurrentColumnIndex(sender);
 
             playUserMove(selectionRow, selectionCol);
+            //MessageBox.Show($"{gameEngine.CurrentPlayer.Name}");
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -219,6 +220,16 @@ namespace othello
         private void displayFiles(string requestType)
         {
             panel2.Visible = true;
+
+            Save save = new Save("game_data.json");
+            string[] fileNames = save.getFileNames();
+
+            checkedListBox1.Items[0] = fileNames[0];
+            checkedListBox1.Items[1] = fileNames[1];
+            checkedListBox1.Items[2] = fileNames[2];
+            checkedListBox1.Items[3] = fileNames[3];
+            checkedListBox1.Items[4] = fileNames[4];
+
             disableInput(requestType);
         }
 
@@ -243,14 +254,15 @@ namespace othello
             panel2.Visible = false;
         }
 
+        
+
         private void sToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var result = MessageBox.Show("Would you like to save your current game?", "Yes", MessageBoxButtons.YesNoCancel);
 
             if (result == DialogResult.Yes)
             {
-                Form2 form2 = new Form2("POST");
-                form2.Show();
+                
             }
             else if (result == DialogResult.No)
             {
@@ -260,7 +272,7 @@ namespace othello
 
         private void saveGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            displayFiles("POST");
         }
 
         private void loadGameToolStripMenuItem_Click(object sender, EventArgs e)
@@ -286,49 +298,86 @@ namespace othello
             textBox3.Text = checkedListBox1.Text;
         }
 
+        private void loadFileDataToScreen()
+        {
+            Save JsonData = new Save("game_data.json");
+
+            SaveState payload = JsonData.loadJsonData()[SelectedFileIndex];
+            int[,] loadedBoardArr = payload.BoardArr;
+            Player loadedP1 = payload.P1;
+            Player loadedP2 = payload.P2;
+            Player loadedCurrentPlayer;
+
+            if (payload.CurrentPlayerID == 0)
+            {
+                loadedCurrentPlayer = loadedP1;
+            }
+            else
+            {
+                loadedCurrentPlayer = loadedP2;
+            }
+
+            panel2.Visible = false;
+
+            if (_gameBoardGui == null) // If player is currently not in game, then generate new board instance.
+            {
+                generateNewBoard();
+                button1.Visible = false;
+            }
+
+            textBox1.Text = loadedP1.Name;
+            textBox2.Text = loadedP2.Name;
+
+            textBox1.Enabled = false;
+            textBox2.Enabled = false;
+
+            gameEngine = new GameEngine();
+            gameEngine.P1 = new Player(textBox1.Text, loadedP1.TokenCount, 0);
+            gameEngine.P2 = new Player(textBox2.Text, loadedP2.TokenCount, 1);
+            gameEngine.BoardArray = loadedBoardArr;
+            gameEngine.CurrentPlayer = loadedCurrentPlayer;
+            gameEngine.GameOver = false;
+
+            gameBoardData = gameEngine.BoardArray;
+            _gameBoardGui.UpdateBoardGui(gameBoardData);
+            MessageBox.Show($"{loadedCurrentPlayer.ID}");
+
+            if(loadedCurrentPlayer.ID == 0) // This fixes the bug of black having 2 turns when loading a game
+            {
+                gameEngine.UpdateCurrentPlayer();
+            }
+            
+            updateCurrentPlayerGUI();
+        }
+
+        private void saveFileDataToJson()
+        {
+            Save JsonData = new Save("game_data.json");
+
+            SaveState payload = new SaveState();
+            if(textBox3.Text == "")
+            {
+                payload.FileName = "CODE TODAYS DATE";
+            } else
+            {
+                payload.FileName = textBox3.Text;
+            }
+            payload.BoardArr = gameBoardData;
+            payload.CurrentPlayerID = gameEngine.CurrentPlayer.ID;
+            payload.P1 = gameEngine.P1;
+            payload.P2 = gameEngine.P2;
+            JsonData.saveDataToJson(SelectedFileIndex, payload);
+            hideFiles();
+        }
+
         private void button6_Click(object sender, EventArgs e)
         {
-            // MessageBox.Show(RequestType);
             if (RequestType == "GET" && SelectedFileIndex != -1)
             {
-                Save JsonData = new Save("game_data.json");
-
-                SaveState payload = JsonData.loadJsonData()[SelectedFileIndex];
-                int[,] loadedBoardArr = payload.BoardArr;
-                Player loadedP1 = payload.P1;
-                Player loadedP2 = payload.P2;
-                Player loadedCurrentPlayer;
-
-                if(payload.CurrentPlayerID == 0)
-                {
-                    loadedCurrentPlayer = loadedP1;
-                } else
-                {
-                    loadedCurrentPlayer = loadedP2;
-                }
-
-                panel2.Visible = false;
-
-                if(_gameBoardGui == null) // If player is currently not in game, then generate new board instance.
-                {
-                    generateNewBoard();
-                    button1.Visible = false;
-                }
-
-                textBox1.Text = loadedP1.Name;
-                textBox2.Text = loadedP2.Name;
-
-                textBox1.Enabled = false;
-                textBox2.Enabled = false;
-
-                gameEngine.P1 = new Player(textBox1.Text, loadedP1.TokenCount, 0);
-                gameEngine.P2 = new Player(textBox2.Text, loadedP2.TokenCount, 1);
-                gameEngine.BoardArray = loadedBoardArr;
-                gameEngine.CurrentPlayer = loadedCurrentPlayer;
-                gameEngine.GameOver = false;
-
-                gameBoardData = gameEngine.BoardArray;
-                _gameBoardGui.UpdateBoardGui(gameBoardData);
+                loadFileDataToScreen();
+            } else if (RequestType == "POST" && SelectedFileIndex != -1)
+            {
+                saveFileDataToJson();
             }
         }
     }
