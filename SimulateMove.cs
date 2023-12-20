@@ -11,20 +11,6 @@ namespace othello
     {
         public SimulateMove(int[,] boardArr, Player currentPlayer, int x, int y) : base(boardArr, currentPlayer, y, x) { }
 
-        /*
-        private void generateInternalSimulation(int x, int y, int horDisplacement, int vertDisplacement)
-        {
-            IllegalMove illegalMove = new IllegalMove(BoardArr, CurrentPlayer, x, y);
-
-            if (illegalMove.checkAllSides() == false)
-            {
-                SimulateMove flankSimulate = new SimulateMove(BoardArr, CurrentPlayer, x + horDisplacement, y + vertDisplacement);
-                flankSimulate.updateBoard();
-                BoardArr = flankSimulate.BoardArr;
-            }
-        }
-        */
-
         private int[,] updateXPiecesOnBoard(int[,] boardClone, int direction) // -1 for left & up | 1 for right and down
         {
             int horizontalDisplacement = 0;

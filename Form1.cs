@@ -11,12 +11,17 @@ namespace othello
         GameboardImageArray _gameBoardGui;
         int[,] gameBoardData;
         string tileImageDirPath = Directory.GetCurrentDirectory() + @"\assets\";
+        
         GameEngine gameEngine = new GameEngine();
+        Save JsonData = new Save("game_data.json");
+        SpeechSynthesizer synth = new SpeechSynthesizer();
+
+        string selectedFileName;
 
         // These are global variables for the saving / loading
 
         int SelectedFileIndex = -1; // initalise at -1 to signify nothing is selected
-        string RequestType; // POST = Save | GET = Load
+        string RequestType; // "POST" = Save | "GET" = Load | "POST, RELOAD" = Save & Reload
 
         public Form1()
         {
@@ -26,6 +31,7 @@ namespace othello
             this.MaximizeBox = false;
 
             this.StartPosition = FormStartPosition.CenterScreen;
+            synth.SetOutputToDefaultAudioDevice();
         }
 
         private void generateNewBoard()
@@ -48,6 +54,14 @@ namespace othello
             }
         }
 
+        private void outputSpeech(string speech)
+        {
+            if (speakToolStripMenuItem.Checked)
+            {
+                synth.Speak(speech);
+            }
+        }
+
         private int[,] MakeBoardArray()
         {
             int[,] boardArray = new int[NUM_OF_BOARD_COL, NUM_OF_BOARD_ROWS];
@@ -65,8 +79,6 @@ namespace othello
             boardArray[3, 4] = 0;
             boardArray[4, 4] = 1;
             boardArray[4, 3] = 0;
-            //boardArray[2, 4] = 0;
-
 
             return boardArray;
         }
@@ -146,15 +158,24 @@ namespace othello
 
             if (checkIfSelectedIsPiece(selectionRow, selectionCol) == false)
             {
-                MessageBox.Show("You cannot select your own piece");
+                string output1 = "You cannot select your own piece";
+                MessageBox.Show(output1);
+                outputSpeech(output1);
             }
             else if (checkForValidMoves(validMoveForCurrentPlayer) == false && checkForValidMoves(validMoveForOppositePlayer) == false)
             {
-                MessageBox.Show("Neither player has a legal move. Game end");
+                string winner = playerWithGreaterTokens();
+                string output2 = $"Neither player has a legal move. Game winner is {winner}";
+                MessageBox.Show(output2);
+                outputSpeech(output2);
+
+                Application.Exit();
             }
             else if (checkForValidMoves(validMoveForCurrentPlayer) == false)
             {
-                MessageBox.Show($"{gameEngine.CurrentPlayer.Name} does not have a legal move");
+                string output3 = $"{gameEngine.CurrentPlayer.Name} does not have a legal move";
+                MessageBox.Show(output3);
+                outputSpeech(output3);
                 gameEngine.UpdateCurrentPlayer();
                 _gameBoardGui.UpdateBoardGui(gameBoardData);
             }
@@ -169,7 +190,9 @@ namespace othello
             else
             {
                 //MessageBox.Show($"You just clicked the square at row {selectionRow + 1} and col {selectionCol + 1}");
-                MessageBox.Show($"This is not a legal move");
+                string output4 = $"This is not a legal move";
+                MessageBox.Show(output4);
+                outputSpeech(output4);
             }
         }
 
@@ -198,31 +221,11 @@ namespace othello
             //MessageBox.Show($"{gameEngine.CurrentPlayer.Name}");
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (textBox1.Text == "") textBox1.Text = "Player 1#";
-            if (textBox2.Text == "") textBox2.Text = "Player 2#";
-
-            button1.Hide();
-            textBox1.Enabled = false;
-            textBox2.Enabled = false;
-            updateCurrentPlayerGUI();
-
-            generateNewBoard();
-
-            gameEngine.P1 = new Player(textBox1.Text, 2, 0);
-            gameEngine.P2 = new Player(textBox2.Text, 2, 1);
-            gameEngine.BoardArray = gameBoardData;
-            gameEngine.CurrentPlayer = gameEngine.P1;
-            gameEngine.GameOver = false;
-        }
-
         private void displayFiles(string requestType)
         {
             panel2.Visible = true;
 
-            Save save = new Save("game_data.json");
-            string[] fileNames = save.getFileNames();
+            string[] fileNames = JsonData.getFileNames();
 
             checkedListBox1.Items[0] = fileNames[0];
             checkedListBox1.Items[1] = fileNames[1];
@@ -233,7 +236,7 @@ namespace othello
             disableInput(requestType);
         }
 
-        private void disableInput(string requestType) // POST = save | GET = load
+        private void disableInput(string requestType) // "POST" = Save | "GET" = Load | "POST, RELOAD" = Save & Reload
         {
             if (requestType == "POST")
             {
@@ -247,6 +250,12 @@ namespace othello
                 button6.Text = "Load";
                 RequestType = "GET";
             }
+            else if (requestType == "POST, RELOAD")
+            {
+                textBox3.Enabled = true;
+                button6.Text = "Save";
+                RequestType = "POST, RELOAD";
+            }
         }
 
         private void hideFiles()
@@ -254,55 +263,40 @@ namespace othello
             panel2.Visible = false;
         }
 
-        
-
-        private void sToolStripMenuItem_Click(object sender, EventArgs e)
+        private int ChechNumberOfSaves()
         {
-            var result = MessageBox.Show("Would you like to save your current game?", "Yes", MessageBoxButtons.YesNoCancel);
+            SaveState[] payload = JsonData.loadJsonData();
+            int countSaves = 0;
 
-            if (result == DialogResult.Yes)
+            for (int i = 0; i < payload.Length; i++)
             {
-                
+                if (payload[i].FileName != "Blank")
+                {
+                    countSaves++;
+                }
             }
-            else if (result == DialogResult.No)
+
+            return countSaves;
+        }
+
+        private int getIndexOfOnlySave()
+        {
+            SaveState[] payload = JsonData.loadJsonData();
+
+            for (int i = 0; i < payload.Length; i++)
             {
-                Application.Restart();
+                if (payload[i].FileName != "Blank")
+                {
+                    return i;
+                }
             }
+
+            return -1; // In-case of there being no saves
         }
 
-        private void saveGameToolStripMenuItem_Click(object sender, EventArgs e)
+        private void extractJson(int fileIndex)
         {
-            displayFiles("POST");
-        }
-
-        private void loadGameToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            displayFiles("GET");
-        }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-            hideFiles();
-        }
-
-        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int iSelectedIndex = checkedListBox1.SelectedIndex;
-            if (iSelectedIndex == -1)
-                return;
-            for (int iIndex = 0; iIndex < checkedListBox1.Items.Count; iIndex++)
-                checkedListBox1.SetItemCheckState(iIndex, CheckState.Unchecked);
-            checkedListBox1.SetItemCheckState(iSelectedIndex, CheckState.Checked);
-            SelectedFileIndex = iSelectedIndex;
-
-            textBox3.Text = checkedListBox1.Text;
-        }
-
-        private void loadFileDataToScreen()
-        {
-            Save JsonData = new Save("game_data.json");
-
-            SaveState payload = JsonData.loadJsonData()[SelectedFileIndex];
+            SaveState payload = JsonData.loadJsonData()[fileIndex];
             int[,] loadedBoardArr = payload.BoardArr;
             Player loadedP1 = payload.P1;
             Player loadedP2 = payload.P2;
@@ -336,29 +330,67 @@ namespace othello
             gameEngine.P2 = new Player(textBox2.Text, loadedP2.TokenCount, 1);
             gameEngine.BoardArray = loadedBoardArr;
             gameEngine.CurrentPlayer = loadedCurrentPlayer;
-            gameEngine.GameOver = false;
 
             gameBoardData = gameEngine.BoardArray;
             _gameBoardGui.UpdateBoardGui(gameBoardData);
-            MessageBox.Show($"{loadedCurrentPlayer.ID}");
 
-            if(loadedCurrentPlayer.ID == 0) // This fixes the bug of black having 2 turns when loading a game
+            if (loadedCurrentPlayer.ID == 0) // This fixes the bug of black having 2 turns when loading a game
             {
                 gameEngine.UpdateCurrentPlayer();
             }
-            
+        }
+
+        private void updateGUIAfterLoad()
+        {
+            gameEngine.P1.TokenCount = countTokensForPlayer(gameEngine.P1);
+            gameEngine.P2.TokenCount = countTokensForPlayer(gameEngine.P2);
+
+            label2.Text = $"{gameEngine.P1.TokenCount}";
+            label1.Text = $"{gameEngine.P2.TokenCount}";
             updateCurrentPlayerGUI();
+        }
+
+        private void loadFileDataToScreen()
+        {
+            int numberOfSaves = ChechNumberOfSaves();
+
+            if (numberOfSaves == 1)
+            {
+                SelectedFileIndex = getIndexOfOnlySave();
+                extractJson(SelectedFileIndex);
+            }
+            else if (numberOfSaves > 1)
+            {
+                extractJson(SelectedFileIndex);
+            }
+
+            updateGUIAfterLoad();
+        }
+
+        private bool warningFromSave()
+        {
+            var result = MessageBox.Show("Are you sure? This will overwrite the current save", "Yes", MessageBoxButtons.YesNo);
+
+            if (result == DialogResult.Yes)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private void saveFileDataToJson()
         {
-            Save JsonData = new Save("game_data.json");
-
             SaveState payload = new SaveState();
-            if(textBox3.Text == "")
+            if (textBox3.Text == "")
             {
-                payload.FileName = "CODE TODAYS DATE";
-            } else
+                DateTime currentDateTime = DateTime.Now;
+                string formattedDateTime = currentDateTime.ToString("dddd, dd MMMM yyyy HH:mm:ss");
+                payload.FileName = formattedDateTime;
+            }
+            else
             {
                 payload.FileName = textBox3.Text;
             }
@@ -366,19 +398,184 @@ namespace othello
             payload.CurrentPlayerID = gameEngine.CurrentPlayer.ID;
             payload.P1 = gameEngine.P1;
             payload.P2 = gameEngine.P2;
-            JsonData.saveDataToJson(SelectedFileIndex, payload);
+            if (warningFromSave())
+            {
+                JsonData.saveDataToJson(SelectedFileIndex, payload);
+            }
+            else
+            {
+                string output = "Operation Cancelled";
+                MessageBox.Show(output);
+                outputSpeech(output);
+            }
+
             hideFiles();
+        }
+
+        private string playerWithGreaterTokens()
+        {
+            Player oppositePlayer = getOppositePlayer(gameEngine.CurrentPlayer);
+            if (gameEngine.CurrentPlayer.TokenCount < oppositePlayer.TokenCount)
+            {
+                return gameEngine.CurrentPlayer.Name;
+            }
+            else if (gameEngine.CurrentPlayer.TokenCount > oppositePlayer.TokenCount)
+            {
+                return oppositePlayer.Name;
+            }
+            else
+            {
+                return "Draw";
+            }
+        }
+
+        /* ----------------------------------- EVENT LISTENERS ----------------------------------------*/
+
+        private void saveGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            {
+                displayFiles("POST");
+            }
+        }
+
+        private void loadGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int numberOfSaves = ChechNumberOfSaves();
+            if (numberOfSaves > 1)
+            {
+                displayFiles("GET");
+            }
+            else if (numberOfSaves == 1)
+            {
+                sToolStripMenuItem.Visible = true;
+                saveGameToolStripMenuItem.Visible = true;
+                loadFileDataToScreen();
+            }
+        }
+
+        private void sToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Would you like to save your current game?", "Save Game?", MessageBoxButtons.YesNoCancel);
+
+            if (result == DialogResult.Yes)
+            {
+                displayFiles("POST, RELOAD");
+            }
+            else if (result == DialogResult.No)
+            {
+                Application.Restart();
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (textBox1.Text == "") textBox1.Text = "Player 1#";
+            if (textBox2.Text == "") textBox2.Text = "Player 2#";
+
+            button1.Hide();
+            textBox1.Enabled = false;
+            textBox2.Enabled = false;
+            sToolStripMenuItem.Visible = true;
+            saveGameToolStripMenuItem.Visible = true;
+            updateCurrentPlayerGUI();
+
+            generateNewBoard();
+
+            gameEngine.P1 = new Player(textBox1.Text, 2, 0);
+            gameEngine.P2 = new Player(textBox2.Text, 2, 1);
+            gameEngine.BoardArray = gameBoardData;
+            gameEngine.CurrentPlayer = gameEngine.P1;
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+            hideFiles();
+        }
+
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int iSelectedIndex = checkedListBox1.SelectedIndex;
+            if (iSelectedIndex == -1)
+                return;
+            for (int iIndex = 0; iIndex < checkedListBox1.Items.Count; iIndex++)
+            {
+                checkedListBox1.SetItemCheckState(iIndex, CheckState.Unchecked);
+            }
+
+
+            checkedListBox1.SetItemCheckState(iSelectedIndex, CheckState.Checked);
+            selectedFileName = checkedListBox1.Items[iSelectedIndex].ToString();
+            SelectedFileIndex = iSelectedIndex;
+
+            textBox3.Text = checkedListBox1.Text;
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
             if (RequestType == "GET" && SelectedFileIndex != -1)
             {
-                loadFileDataToScreen();
-            } else if (RequestType == "POST" && SelectedFileIndex != -1)
+                if (selectedFileName == "Blank")
+                {
+                    string output = "You cannot load a blank file";
+                    MessageBox.Show(output);
+                    outputSpeech(output);
+                }
+                else
+                {
+                    // If user is loading a game whilst not currently playing one, the settings will need to appear
+                    sToolStripMenuItem.Visible = true;
+                    saveGameToolStripMenuItem.Visible = true;
+                    loadFileDataToScreen();
+                }
+            }
+            else if (RequestType == "POST" && SelectedFileIndex != -1)
             {
                 saveFileDataToJson();
             }
+            else if (RequestType == "POST, RELOAD")
+            {
+                saveFileDataToJson();
+                Application.Restart();
+            }
+        }
+
+        private void informationPanelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (informationPanelToolStripMenuItem.Checked)
+            {
+                panel1.Visible = true;
+            }
+            else
+            {
+                panel1.Visible = false;
+            }
+        }
+
+        private void exitGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // If there is no game active, then don't ask user to save game
+            if (button1.Visible == true)
+            {
+                Application.Exit();
+            }
+
+            var result = MessageBox.Show("Would you like to save your current game?", "Save Game?", MessageBoxButtons.YesNoCancel);
+
+            if (result == DialogResult.Yes)
+            {
+                displayFiles("POST, RELOAD");
+                Application.Exit();
+            }
+            else if (result == DialogResult.No)
+            {
+                Application.Exit();
+            }
+        }
+
+        private void sToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Form2 frm2 = new Form2();
+            frm2.Show();
         }
     }
 }

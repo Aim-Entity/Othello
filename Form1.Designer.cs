@@ -44,6 +44,7 @@
             sToolStripMenuItem = new ToolStripMenuItem();
             saveGameToolStripMenuItem = new ToolStripMenuItem();
             loadGameToolStripMenuItem = new ToolStripMenuItem();
+            exitGameToolStripMenuItem = new ToolStripMenuItem();
             fToolStripMenuItem = new ToolStripMenuItem();
             speakToolStripMenuItem = new ToolStripMenuItem();
             informationPanelToolStripMenuItem = new ToolStripMenuItem();
@@ -74,10 +75,9 @@
             panel1.Controls.Add(textBox1);
             panel1.Controls.Add(pictureBox1);
             panel1.Controls.Add(label1);
-            panel1.Location = new Point(26, 371);
-            panel1.Margin = new Padding(3, 2, 3, 2);
+            panel1.Location = new Point(30, 495);
             panel1.Name = "panel1";
-            panel1.Size = new Size(560, 124);
+            panel1.Size = new Size(640, 165);
             panel1.TabIndex = 0;
             // 
             // label4
@@ -85,10 +85,10 @@
             label4.AutoSize = true;
             label4.BackColor = Color.Black;
             label4.ForeColor = SystemColors.ButtonHighlight;
-            label4.Location = new Point(410, 42);
+            label4.Location = new Point(469, 56);
             label4.Name = "label4";
-            label4.Padding = new Padding(26, 2, 26, 2);
-            label4.Size = new Size(96, 19);
+            label4.Padding = new Padding(30, 3, 30, 3);
+            label4.Size = new Size(116, 26);
             label4.TabIndex = 8;
             label4.Text = "To Play";
             label4.Visible = false;
@@ -98,20 +98,19 @@
             label3.AutoSize = true;
             label3.BackColor = Color.Black;
             label3.ForeColor = SystemColors.ButtonHighlight;
-            label3.Location = new Point(129, 42);
+            label3.Location = new Point(147, 56);
             label3.Name = "label3";
-            label3.Padding = new Padding(26, 2, 26, 2);
-            label3.Size = new Size(96, 19);
+            label3.Padding = new Padding(30, 3, 30, 3);
+            label3.Size = new Size(116, 26);
             label3.TabIndex = 7;
             label3.Text = "To Play";
             label3.Visible = false;
             // 
             // button1
             // 
-            button1.Location = new Point(10, 10);
-            button1.Margin = new Padding(3, 2, 3, 2);
+            button1.Location = new Point(11, 13);
             button1.Name = "button1";
-            button1.Size = new Size(108, 31);
+            button1.Size = new Size(123, 41);
             button1.TabIndex = 6;
             button1.Text = "Start Game";
             button1.UseVisualStyleBackColor = true;
@@ -119,19 +118,17 @@
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(387, 64);
-            textBox2.Margin = new Padding(3, 2, 3, 2);
+            textBox2.Location = new Point(442, 85);
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(145, 23);
+            textBox2.Size = new Size(165, 27);
             textBox2.TabIndex = 5;
             // 
             // pictureBox2
             // 
             pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(338, 56);
-            pictureBox2.Margin = new Padding(3, 2, 3, 2);
+            pictureBox2.Location = new Point(386, 75);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(44, 38);
+            pictureBox2.Size = new Size(50, 51);
             pictureBox2.TabIndex = 4;
             pictureBox2.TabStop = false;
             // 
@@ -139,27 +136,25 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(290, 56);
+            label2.Location = new Point(331, 75);
             label2.Name = "label2";
-            label2.Size = new Size(38, 30);
+            label2.Size = new Size(48, 37);
             label2.TabIndex = 3;
             label2.Text = "2X";
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(107, 64);
-            textBox1.Margin = new Padding(3, 2, 3, 2);
+            textBox1.Location = new Point(122, 85);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(145, 23);
+            textBox1.Size = new Size(165, 27);
             textBox1.TabIndex = 2;
             // 
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(58, 56);
-            pictureBox1.Margin = new Padding(3, 2, 3, 2);
+            pictureBox1.Location = new Point(66, 75);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(44, 38);
+            pictureBox1.Size = new Size(50, 51);
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
             // 
@@ -167,9 +162,9 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(10, 56);
+            label1.Location = new Point(11, 75);
             label1.Name = "label1";
-            label1.Size = new Size(38, 30);
+            label1.Size = new Size(48, 37);
             label1.TabIndex = 0;
             label1.Text = "2X";
             // 
@@ -179,67 +174,81 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { dToolStripMenuItem, fToolStripMenuItem, sToolStripMenuItem1 });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Padding = new Padding(5, 2, 0, 2);
-            menuStrip1.Size = new Size(614, 24);
+            menuStrip1.Padding = new Padding(6, 3, 0, 3);
+            menuStrip1.Size = new Size(702, 30);
             menuStrip1.TabIndex = 1;
             menuStrip1.Text = "menuStrip1";
             // 
             // dToolStripMenuItem
             // 
             dToolStripMenuItem.BackColor = Color.FromArgb(224, 224, 224);
-            dToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { sToolStripMenuItem, saveGameToolStripMenuItem, loadGameToolStripMenuItem });
+            dToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { sToolStripMenuItem, saveGameToolStripMenuItem, loadGameToolStripMenuItem, exitGameToolStripMenuItem });
             dToolStripMenuItem.Name = "dToolStripMenuItem";
-            dToolStripMenuItem.Size = new Size(50, 20);
+            dToolStripMenuItem.Size = new Size(62, 24);
             dToolStripMenuItem.Text = "Game";
             // 
             // sToolStripMenuItem
             // 
             sToolStripMenuItem.Name = "sToolStripMenuItem";
-            sToolStripMenuItem.Size = new Size(134, 22);
+            sToolStripMenuItem.Size = new Size(224, 26);
             sToolStripMenuItem.Text = "New Game";
+            sToolStripMenuItem.Visible = false;
             sToolStripMenuItem.Click += sToolStripMenuItem_Click;
             // 
             // saveGameToolStripMenuItem
             // 
             saveGameToolStripMenuItem.Name = "saveGameToolStripMenuItem";
-            saveGameToolStripMenuItem.Size = new Size(134, 22);
+            saveGameToolStripMenuItem.Size = new Size(224, 26);
             saveGameToolStripMenuItem.Text = "Save Game";
+            saveGameToolStripMenuItem.Visible = false;
             saveGameToolStripMenuItem.Click += saveGameToolStripMenuItem_Click;
             // 
             // loadGameToolStripMenuItem
             // 
             loadGameToolStripMenuItem.Name = "loadGameToolStripMenuItem";
-            loadGameToolStripMenuItem.Size = new Size(134, 22);
-            loadGameToolStripMenuItem.Text = "Load Game";
+            loadGameToolStripMenuItem.Size = new Size(224, 26);
+            loadGameToolStripMenuItem.Text = "Restore Game";
             loadGameToolStripMenuItem.Click += loadGameToolStripMenuItem_Click;
+            // 
+            // exitGameToolStripMenuItem
+            // 
+            exitGameToolStripMenuItem.Name = "exitGameToolStripMenuItem";
+            exitGameToolStripMenuItem.Size = new Size(224, 26);
+            exitGameToolStripMenuItem.Text = "Exit Game";
+            exitGameToolStripMenuItem.Click += exitGameToolStripMenuItem_Click;
             // 
             // fToolStripMenuItem
             // 
             fToolStripMenuItem.BackColor = Color.FromArgb(224, 224, 224);
             fToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { speakToolStripMenuItem, informationPanelToolStripMenuItem });
             fToolStripMenuItem.Name = "fToolStripMenuItem";
-            fToolStripMenuItem.Size = new Size(61, 20);
+            fToolStripMenuItem.Size = new Size(76, 24);
             fToolStripMenuItem.Text = "Settings";
             // 
             // speakToolStripMenuItem
             // 
             speakToolStripMenuItem.CheckOnClick = true;
             speakToolStripMenuItem.Name = "speakToolStripMenuItem";
-            speakToolStripMenuItem.Size = new Size(169, 22);
+            speakToolStripMenuItem.Size = new Size(209, 26);
             speakToolStripMenuItem.Text = "Speak";
             // 
             // informationPanelToolStripMenuItem
             // 
+            informationPanelToolStripMenuItem.Checked = true;
+            informationPanelToolStripMenuItem.CheckOnClick = true;
+            informationPanelToolStripMenuItem.CheckState = CheckState.Checked;
             informationPanelToolStripMenuItem.Name = "informationPanelToolStripMenuItem";
-            informationPanelToolStripMenuItem.Size = new Size(169, 22);
+            informationPanelToolStripMenuItem.Size = new Size(209, 26);
             informationPanelToolStripMenuItem.Text = "Information Panel";
+            informationPanelToolStripMenuItem.Click += informationPanelToolStripMenuItem_Click;
             // 
             // sToolStripMenuItem1
             // 
             sToolStripMenuItem1.BackColor = Color.FromArgb(224, 224, 224);
             sToolStripMenuItem1.Name = "sToolStripMenuItem1";
-            sToolStripMenuItem1.Size = new Size(44, 20);
+            sToolStripMenuItem1.Size = new Size(55, 24);
             sToolStripMenuItem1.Text = "Help";
+            sToolStripMenuItem1.Click += sToolStripMenuItem1_Click;
             // 
             // panel2
             // 
@@ -250,10 +259,9 @@
             panel2.Controls.Add(label5);
             panel2.Controls.Add(textBox3);
             panel2.Controls.Add(label6);
-            panel2.Location = new Point(183, 44);
-            panel2.Margin = new Padding(3, 2, 3, 2);
+            panel2.Location = new Point(193, 62);
             panel2.Name = "panel2";
-            panel2.Size = new Size(248, 302);
+            panel2.Size = new Size(332, 403);
             panel2.TabIndex = 2;
             panel2.Visible = false;
             // 
@@ -263,9 +271,9 @@
             label7.BorderStyle = BorderStyle.FixedSingle;
             label7.Cursor = Cursors.Hand;
             label7.ForeColor = Color.Red;
-            label7.Location = new Point(11, 7);
+            label7.Location = new Point(13, 9);
             label7.Name = "label7";
-            label7.Size = new Size(34, 17);
+            label7.Size = new Size(42, 22);
             label7.TabIndex = 10;
             label7.Text = "Back";
             label7.Click += label7_Click;
@@ -274,19 +282,17 @@
             // 
             checkedListBox1.FormattingEnabled = true;
             checkedListBox1.Items.AddRange(new object[] { "Blank", "Blank", "Blank", "Blank", "Blank" });
-            checkedListBox1.Location = new Point(33, 53);
-            checkedListBox1.Margin = new Padding(3, 2, 3, 2);
+            checkedListBox1.Location = new Point(24, 72);
             checkedListBox1.Name = "checkedListBox1";
-            checkedListBox1.Size = new Size(167, 148);
+            checkedListBox1.Size = new Size(284, 180);
             checkedListBox1.TabIndex = 9;
             checkedListBox1.SelectedIndexChanged += checkedListBox1_SelectedIndexChanged;
             // 
             // button6
             // 
-            button6.Location = new Point(73, 269);
-            button6.Margin = new Padding(3, 2, 3, 2);
+            button6.Location = new Point(131, 351);
             button6.Name = "button6";
-            button6.Size = new Size(74, 23);
+            button6.Size = new Size(85, 31);
             button6.TabIndex = 8;
             button6.Text = "Save";
             button6.UseVisualStyleBackColor = true;
@@ -295,40 +301,38 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(11, 224);
+            label5.Location = new Point(24, 283);
             label5.Name = "label5";
-            label5.Size = new Size(114, 15);
+            label5.Size = new Size(144, 20);
             label5.TabIndex = 7;
             label5.Text = "Name Your Save File";
             // 
             // textBox3
             // 
-            textBox3.Location = new Point(11, 242);
-            textBox3.Margin = new Padding(3, 2, 3, 2);
+            textBox3.Location = new Point(24, 307);
             textBox3.Name = "textBox3";
-            textBox3.Size = new Size(210, 23);
+            textBox3.Size = new Size(284, 27);
             textBox3.TabIndex = 6;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(59, 28);
+            label6.Location = new Point(102, 39);
             label6.Name = "label6";
-            label6.Size = new Size(97, 15);
+            label6.Size = new Size(125, 20);
             label6.TabIndex = 0;
             label6.Text = "Select A Save File";
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(614, 505);
+            ClientSize = new Size(702, 673);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(menuStrip1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
-            Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
             Text = "O'Neillo Game";
             panel1.ResumeLayout(false);
@@ -371,5 +375,6 @@
         private TextBox textBox3;
         private Label label6;
         private Label label7;
+        private ToolStripMenuItem exitGameToolStripMenuItem;
     }
 }

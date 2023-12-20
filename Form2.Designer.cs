@@ -28,93 +28,83 @@
         /// </summary>
         private void InitializeComponent()
         {
-            panel1 = new Panel();
-            checkedListBox1 = new CheckedListBox();
-            button6 = new Button();
-            label2 = new Label();
-            textBox1 = new TextBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
+            pictureBox1 = new PictureBox();
             label1 = new Label();
-            panel1.SuspendLayout();
+            label2 = new Label();
+            richTextBox1 = new RichTextBox();
+            button1 = new Button();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
-            // panel1
+            // pictureBox1
             // 
-            panel1.BackColor = Color.FromArgb(255, 192, 192);
-            panel1.Controls.Add(checkedListBox1);
-            panel1.Controls.Add(button6);
-            panel1.Controls.Add(label2);
-            panel1.Controls.Add(textBox1);
-            panel1.Controls.Add(label1);
-            panel1.Location = new Point(123, 23);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(283, 402);
-            panel1.TabIndex = 0;
-            // 
-            // checkedListBox1
-            // 
-            checkedListBox1.FormattingEnabled = true;
-            checkedListBox1.Items.AddRange(new object[] { "Blank", "Blank", "Blank", "Blank", "Blank" });
-            checkedListBox1.Location = new Point(38, 71);
-            checkedListBox1.Name = "checkedListBox1";
-            checkedListBox1.Size = new Size(190, 202);
-            checkedListBox1.TabIndex = 9;
-            checkedListBox1.SelectedIndexChanged += checkedListBox1_SelectedIndexChanged;
-            // 
-            // button6
-            // 
-            button6.Location = new Point(88, 355);
-            button6.Name = "button6";
-            button6.Size = new Size(84, 31);
-            button6.TabIndex = 8;
-            button6.Text = "Save";
-            button6.UseVisualStyleBackColor = true;
-            button6.Click += button6_Click;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(13, 299);
-            label2.Name = "label2";
-            label2.Size = new Size(144, 20);
-            label2.TabIndex = 7;
-            label2.Text = "Name Your Save File";
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(13, 322);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(239, 27);
-            textBox1.TabIndex = 6;
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(12, 106);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(230, 210);
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(71, 25);
+            label1.Font = new Font("Segoe UI", 21F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.Location = new Point(350, 39);
             label1.Name = "label1";
-            label1.Size = new Size(125, 20);
-            label1.TabIndex = 0;
-            label1.Text = "Select A Save File";
+            label1.Size = new Size(135, 47);
+            label1.TabIndex = 1;
+            label1.Text = "ONiello";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(-71, 244);
+            label2.Name = "label2";
+            label2.Size = new Size(0, 20);
+            label2.TabIndex = 2;
+            // 
+            // richTextBox1
+            // 
+            richTextBox1.Location = new Point(289, 106);
+            richTextBox1.Name = "richTextBox1";
+            richTextBox1.Size = new Size(251, 210);
+            richTextBox1.TabIndex = 3;
+            richTextBox1.Text = resources.GetString("richTextBox1.Text");
+            // 
+            // button1
+            // 
+            button1.Location = new Point(220, 379);
+            button1.Name = "button1";
+            button1.Size = new Size(94, 29);
+            button1.TabIndex = 4;
+            button1.Text = "Close";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // Form2
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(552, 450);
-            Controls.Add(panel1);
+            Controls.Add(button1);
+            Controls.Add(richTextBox1);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Controls.Add(pictureBox1);
             Name = "Form2";
             Text = "Form2";
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private Panel panel1;
+        private PictureBox pictureBox1;
         private Label label1;
-        private TextBox textBox1;
         private Label label2;
-        private Button button6;
-        private CheckedListBox checkedListBox1;
+        private RichTextBox richTextBox1;
+        private Button button1;
     }
 }
